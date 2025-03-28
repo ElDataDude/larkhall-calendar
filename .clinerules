@@ -1,0 +1,148 @@
+# Larkhall Athletic Fixtures Calendar - Project Intelligence
+
+This file captures key insights, patterns, and preferences for the Larkhall Athletic Fixtures Calendar project. It serves as a learning journal to help maintain consistency and efficiency throughout development.
+
+## Project Patterns
+
+### Architecture Patterns
+
+1. **Simple, Modular Design**
+   - Keep components separate and focused on single responsibilities
+   - Maintain clear interfaces between components
+   - Prioritize readability and maintainability over complexity
+
+2. **Automation First**
+   - Automate all routine tasks
+   - Use GitHub Actions for scheduled processes
+   - Minimize manual intervention requirements
+
+3. **Defensive Programming**
+   - Assume API responses may be inconsistent
+   - Implement robust error handling
+   - Provide fallback mechanisms for failures
+
+### Implementation Preferences
+
+1. **Python Style**
+   - Follow PEP 8 guidelines
+   - Use type hints where beneficial
+   - Prefer explicit over implicit
+
+2. **Error Handling**
+   - Use try/except blocks for external service calls
+   - Log detailed error information
+   - Implement retry mechanisms with backoff
+
+3. **Testing Approach**
+   - Test API interactions with mocked responses
+   - Validate calendar output against RFC 5545
+   - Verify end-to-end functionality with real subscriptions
+
+## Critical Implementation Paths
+
+### API Integration
+
+1. **Authentication**
+   - Use API key in request header
+   - Keep key secure in environment variables
+   - Never commit API key to repository
+
+2. **Data Retrieval**
+   - Handle pagination if present
+   - Filter for relevant fixtures only
+   - Process both home and away fixtures
+
+### Calendar Generation
+
+1. **Event Creation**
+   - Include all essential fixture details
+   - Format dates in UTC with timezone information
+   - Set appropriate alarm/reminder properties
+
+2. **File Management**
+   - Generate complete file on each update
+   - Validate file format before committing
+   - Maintain consistent file location
+
+## Known Challenges
+
+1. **API Reliability**
+   - FootballWebPages API availability unknown
+   - May have rate limits or downtime
+   - Need robust retry and fallback mechanisms
+
+2. **Fixture Changes**
+   - Football fixtures often change with little notice
+   - Need to handle postponements and cancellations
+   - Calendar must reflect latest information
+
+3. **Calendar Client Compatibility**
+   - Different calendar applications handle .ics differently
+   - Need to test with major platforms
+   - May need workarounds for specific clients
+
+## Evolution of Project Decisions
+
+### Initial Decisions (March 2025)
+
+1. **Technology Stack**: Python with requests and icalendar libraries
+   - Chosen for simplicity and strong library support
+   - Alternatives considered: Node.js, PHP
+
+2. **Hosting Platform**: GitHub Pages
+   - Chosen for free, reliable hosting integrated with GitHub Actions
+   - Alternatives considered: AWS S3, Netlify
+
+3. **Update Frequency**: Daily via GitHub Actions
+   - Chosen to balance timeliness with resource usage
+   - Alternatives considered: Hourly, weekly
+
+## Tool Usage Patterns
+
+### GitHub
+
+1. **Repository Structure**
+   - Keep flat structure for simplicity
+   - Use src/ directory for Python code
+   - Store .ics file in root for easy access
+
+2. **GitHub Actions**
+   - Use scheduled workflows for automation
+   - Store secrets securely
+   - Enable manual trigger option
+
+### Python Environment
+
+1. **Dependency Management**
+   - Use requirements.txt for dependencies
+   - Pin specific versions for stability
+   - Use virtual environment for development
+
+2. **Local Development**
+   - Use .env file for local environment variables
+   - Test locally before pushing changes
+   - Validate .ics output with calendar applications
+
+## User Preferences
+
+1. **Calendar Content**
+   - Include essential fixture details only
+   - Format event titles consistently
+   - Set appropriate calendar metadata
+
+2. **Subscription Process**
+   - Make subscription URL easy to access
+   - Provide clear instructions for different platforms
+   - Ensure calendar name is descriptive
+
+## Future Considerations
+
+1. **Potential Enhancements**
+   - Adding match results after games
+   - Including additional team information
+   - Supporting multiple teams or competitions
+
+2. **Maintenance Priorities**
+   - Reliability over new features
+   - Backward compatibility
+   - Documentation currency

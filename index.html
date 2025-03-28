@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Larkhall Athletic Fixtures Calendar</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+        }
+        header {
+            text-align: center;
+            margin-bottom: 30px;
+        }
+        h1 {
+            color: #1a365d;
+        }
+        .calendar-url {
+            background-color: #f5f5f5;
+            padding: 10px;
+            border-radius: 5px;
+            font-family: monospace;
+            word-break: break-all;
+            margin: 20px 0;
+        }
+        .instructions {
+            margin-bottom: 40px;
+        }
+        .platform {
+            margin-bottom: 30px;
+            border-left: 4px solid #1a365d;
+            padding-left: 20px;
+        }
+        ol {
+            margin-left: 20px;
+        }
+        footer {
+            margin-top: 50px;
+            text-align: center;
+            font-size: 0.9em;
+            color: #666;
+        }
+        .button {
+            display: inline-block;
+            background-color: #1a365d;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 10px;
+        }
+        .button:hover {
+            background-color: #2c4c7c;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <h1>Larkhall Athletic Fixtures Calendar</h1>
+        <p>Stay up-to-date with all Larkhall Athletic fixtures by subscribing to our official calendar</p>
+    </header>
+
+    <main>
+        <section>
+            <h2>Calendar Subscription URL</h2>
+            <p>Use the following URL to subscribe to the calendar in your preferred application:</p>
+            <div class="calendar-url">
+                https://[username].github.io/larkhall-calendar/fixtures.ics
+            </div>
+            <p><em>Note: Replace [username] with the actual GitHub username where this calendar is hosted.</em></p>
+        </section>
+
+        <section class="instructions">
+            <h2>How to Subscribe</h2>
+            
+            <div class="platform">
+                <h3>Google Calendar</h3>
+                <ol>
+                    <li>Open <a href="https://calendar.google.com/" target="_blank">Google Calendar</a></li>
+                    <li>Click the "+" next to "Other calendars"</li>
+                    <li>Select "From URL"</li>
+                    <li>Enter the calendar URL shown above</li>
+                    <li>Click "Add calendar"</li>
+                </ol>
+                <a href="https://calendar.google.com/calendar/r/settings/addbyurl" class="button" target="_blank">Open Google Calendar</a>
+            </div>
+
+            <div class="platform">
+                <h3>Apple Calendar (macOS)</h3>
+                <ol>
+                    <li>Open the Calendar app</li>
+                    <li>Select File > New Calendar Subscription</li>
+                    <li>Enter the calendar URL shown above</li>
+                    <li>Click "Subscribe"</li>
+                    <li>Configure options (auto-refresh, alerts, etc.)</li>
+                    <li>Click "OK"</li>
+                </ol>
+            </div>
+
+            <div class="platform">
+                <h3>Apple Calendar (iOS)</h3>
+                <ol>
+                    <li>Go to Settings > Calendar > Accounts</li>
+                    <li>Tap "Add Account"</li>
+                    <li>Select "Other"</li>
+                    <li>Tap "Add Subscribed Calendar"</li>
+                    <li>Enter the calendar URL shown above</li>
+                    <li>Tap "Next" and then "Save"</li>
+                </ol>
+            </div>
+
+            <div class="platform">
+                <h3>Microsoft Outlook</h3>
+                <ol>
+                    <li>Open Outlook and go to Calendar view</li>
+                    <li>Select "Add Calendar" > "From Internet"</li>
+                    <li>Enter the calendar URL shown above</li>
+                    <li>Click "OK"</li>
+                    <li>Name the calendar and click "OK"</li>
+                </ol>
+            </div>
+        </section>
+
+        <section>
+            <h2>Features</h2>
+            <ul>
+                <li><strong>Automatic Updates:</strong> The calendar refreshes daily to ensure you have the latest fixture information</li>
+                <li><strong>Complete Information:</strong> Each event includes opponent, venue, date/time, and competition details</li>
+                <li><strong>Status Updates:</strong> Cancelled or postponed matches are clearly marked</li>
+                <li><strong>Universal Compatibility:</strong> Works with all major calendar applications</li>
+            </ul>
+        </section>
+
+        <section>
+            <h2>FAQ</h2>
+            
+            <h3>How often is the calendar updated?</h3>
+            <p>The calendar is updated daily at 4:00 AM UTC to reflect the latest fixture information.</p>
+            
+            <h3>Will I be notified of fixture changes?</h3>
+            <p>Your calendar application will automatically sync with any changes to the fixtures. Notification settings depend on your calendar application's configuration.</p>
+            
+            <h3>Can I add this calendar to multiple devices?</h3>
+            <p>Yes, you can subscribe to the calendar on as many devices as you wish.</p>
+            
+            <h3>Is there a mobile app?</h3>
+            <p>No dedicated app is needed. Simply subscribe to the calendar in your preferred calendar application on your mobile device.</p>
+        </section>
+    </main>
+
+    <footer>
+        <p>This calendar is unofficial and not directly affiliated with Larkhall Athletic Football Club.</p>
+        <p>Data provided by FootballWebPages API. Last updated: <span id="last-updated">March 28, 2025</span></p>
+    </footer>
+
+    <script>
+        // Update the current date in the footer
+        document.addEventListener('DOMContentLoaded', function() {
+            const now = new Date();
+            const options = { year: 'numeric', month: 'long', day: 'numeric' };
+            document.getElementById('last-updated').textContent = now.toLocaleDateString('en-GB', options);
+        });
+    </script>
+</body>
+</html>
