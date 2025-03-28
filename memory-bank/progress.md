@@ -1,8 +1,8 @@
 # Progress Tracker: Larkhall Athletic Fixtures Calendar
 
-## Project Status: Ready for Deployment
+## Project Status: Deployment In Progress with Challenges
 
-As of March 28, 2025, the project is **ready for deployment**. The implementation has been completed, tested, and is now ready to be deployed to GitHub Pages.
+As of March 28, 2025, the project is **in the deployment process with challenges**. The implementation has been completed and tested locally, but we're encountering issues with GitHub Pages and GitHub Actions.
 
 ## Completed Components
 
@@ -23,7 +23,7 @@ As of March 28, 2025, the project is **ready for deployment**. The implementatio
 - ✅ README with project overview
 - ✅ License file added
 - ✅ .gitignore configured
-- ⬜ GitHub repository created (pending)
+- ✅ GitHub repository created
 
 ### Development Environment
 - ✅ Python environment setup script created
@@ -63,12 +63,13 @@ As of March 28, 2025, the project is **ready for deployment**. The implementatio
 ## Pending Components
 
 ### Deployment
-- ⬜ GitHub repository creation
-- ⬜ GitHub Pages configuration
+- ✅ GitHub repository creation
+- ⚠️ GitHub Pages configuration (404 error)
+- ⚠️ GitHub Actions workflow (not appearing in Actions tab)
 - ⬜ Public URL establishment
 - ⬜ Subscription testing
 
-A detailed deployment guide has been created (DEPLOYMENT.md) with step-by-step instructions for completing these tasks.
+A detailed deployment guide has been created (DEPLOYMENT.md) with step-by-step instructions for completing these tasks, but we're encountering unexpected issues with GitHub Pages and GitHub Actions.
 
 ## Known Issues
 
@@ -81,6 +82,16 @@ A detailed deployment guide has been created (DEPLOYMENT.md) with step-by-step i
    - **Issue**: Compatibility with all calendar applications not yet verified
    - **Impact**: May require format adjustments
    - **Status**: To be tested during implementation
+
+3. **GitHub Actions Workflow**
+   - **Issue**: Workflow files pushed to repository but not appearing in Actions tab
+   - **Impact**: Cannot trigger automated updates
+   - **Status**: Investigating - manual calendar generation completed as workaround
+
+4. **GitHub Pages Configuration**
+   - **Issue**: Pages configured but returning 404 error
+   - **Impact**: Calendar not accessible via public URL
+   - **Status**: Investigating
 
 ## Next Milestones
 
@@ -124,3 +135,9 @@ A detailed deployment guide has been created (DEPLOYMENT.md) with step-by-step i
 | March 28, 2025 | API response structure confirmed and code updated |
 | March 28, 2025 | Calendar generation tested and validated |
 | March 28, 2025 | Deployment guide created |
+| March 28, 2025 | GitHub repository created |
+| March 28, 2025 | GitHub Pages configured |
+| March 28, 2025 | API key added as repository secret |
+| March 28, 2025 | Encountered issues with GitHub Actions workflow visibility |
+| March 28, 2025 | Generated fixtures.ics file locally as workaround |
+| March 28, 2025 | Attempted multiple approaches to resolve GitHub Actions issues |

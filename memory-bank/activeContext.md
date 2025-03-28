@@ -2,13 +2,13 @@
 
 ## Current Work Focus
 
-As of March 28, 2025, the project is **ready for deployment**. The current focus is on:
+As of March 28, 2025, the project is **in deployment process with challenges**. The current focus is on:
 
-1. **Deployment to GitHub Pages**
-   - Creating the GitHub repository
-   - Configuring GitHub Pages
-   - Setting up the API key as a repository secret
-   - Testing the public URL
+1. **Resolving GitHub Pages and GitHub Actions Issues**
+   - GitHub repository created
+   - GitHub Pages configured but not serving content (404 error)
+   - API key set up as repository secret
+   - GitHub Actions workflow not appearing in Actions tab
 
 2. **Subscription Testing**
    - Testing subscription across different platforms
@@ -140,8 +140,12 @@ As of March 28, 2025, the project is **ready for deployment**. The current focus
 
 ## Current Blockers
 
-1. **GitHub Repository**: Need to create the repository and configure GitHub Pages
-   - Deployment guide created with step-by-step instructions
+1. **GitHub Actions Workflow**: Workflow files pushed to repository but not appearing in Actions tab
+   - Multiple approaches attempted including renaming workflow file
+   - Manual generation of fixtures.ics file completed as workaround
 
-2. **Subscription Testing**: Need to verify calendar compatibility across platforms
-   - Ready for testing once the public URL is established
+2. **GitHub Pages Configuration**: Pages configured but returning 404 error
+   - Need to investigate GitHub Pages settings and branch configuration
+
+3. **Subscription Testing**: Cannot proceed until public URL is accessible
+   - Blocked by GitHub Pages issues
