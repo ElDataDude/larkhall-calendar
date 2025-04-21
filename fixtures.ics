@@ -11,7 +11,7 @@ BEGIN:VEVENT
 SUMMARY:Shaftesbury vs Larkhall Athletic
 DTSTART:20250421T140000Z
 DTEND:20250421T154500Z
-DTSTAMP:20250421T041509Z
+DTSTAMP:20250421T042535Z
 UID:20250421-larkhall-shaftesbury@larkhall-fixtures.example.com
 CATEGORIES:Football,Fixture
 DESCRIPTION:Southern League - South Division match between Shaftesbury and
@@ -23,7 +23,7 @@ BEGIN:VEVENT
 SUMMARY:Falmouth Town vs Larkhall Athletic
 DTSTART:20250424T184500Z
 DTEND:20250424T203000Z
-DTSTAMP:20250421T041509Z
+DTSTAMP:20250421T042535Z
 UID:20250424-larkhall-falmouth-town@larkhall-fixtures.example.com
 CATEGORIES:Football,Fixture
 DESCRIPTION:Southern League - South Division match between Falmouth Town a
@@ -35,7 +35,7 @@ BEGIN:VEVENT
 SUMMARY:Larkhall Athletic vs Exmouth Town
 DTSTART:20250426T140000Z
 DTEND:20250426T154500Z
-DTSTAMP:20250421T041509Z
+DTSTAMP:20250421T042535Z
 UID:20250426-larkhall-exmouth-town@larkhall-fixtures.example.com
 CATEGORIES:Football,Fixture
 DESCRIPTION:Southern League - South Division match between Larkhall Athlet
