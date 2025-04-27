@@ -7,16 +7,4 @@ X-WR-CALDESC:Official fixtures calendar for Larkhall Athletic Football Clu
  b
 X-WR-CALNAME:Larkhall Athletic Fixtures
 X-WR-TIMEZONE:Europe/London
-BEGIN:VEVENT
-SUMMARY:Larkhall Athletic vs Exmouth Town
-DTSTART:20250426T140000Z
-DTEND:20250426T154500Z
-DTSTAMP:20250426T042416Z
-UID:20250426-larkhall-exmouth-town@larkhall-fixtures.example.com
-CATEGORIES:Football,Fixture
-DESCRIPTION:Southern League - South Division match between Larkhall Athlet
- ic and Exmouth Town
-LOCATION:Plain Ham
-STATUS:CONFIRMED
-END:VEVENT
 END:VCALENDAR
