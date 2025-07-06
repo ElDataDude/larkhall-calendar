@@ -7,4 +7,16 @@ X-WR-CALDESC:Official fixtures calendar for Larkhall Athletic Football Clu
  b
 X-WR-CALNAME:Larkhall Athletic Fixtures
 X-WR-TIMEZONE:Europe/London
+BEGIN:VEVENT
+SUMMARY:Beaconsfield Town vs Larkhall Athletic
+DTSTART:20250802T140000Z
+DTEND:20250802T154500Z
+DTSTAMP:20250706T042824Z
+UID:20250802-larkhall-beaconsfield-town@larkhall-fixtures.example.com
+CATEGORIES:Football,Fixture
+DESCRIPTION:Emirates FA Cup match between Beaconsfield Town and Larkhall A
+ thletic
+LOCATION:Holloways Park
+STATUS:CONFIRMED
+END:VEVENT
 END:VCALENDAR
