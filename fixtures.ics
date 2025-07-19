@@ -8,87 +8,26 @@ X-WR-CALDESC:Official fixtures calendar for Larkhall Athletic Football Clu
 X-WR-CALNAME:Larkhall Athletic Fixtures
 X-WR-TIMEZONE:Europe/London
 BEGIN:VEVENT
-SUMMARY:Larkhall Athletic vs Malvern Town
-DTSTART:20250329T150000Z
-DTEND:20250329T164500Z
-DTSTAMP:20250328T164343Z
-UID:20250329-larkhall-malvern-town@larkhall-fixtures.example.com
+SUMMARY:Beaconsfield Town vs Larkhall Athletic
+DTSTART:20250802T140000Z
+DTEND:20250802T154500Z
+DTSTAMP:20250719T082402Z
+UID:20250802-larkhall-beaconsfield-town@larkhall-fixtures.example.com
 CATEGORIES:Football,Fixture
-DESCRIPTION:Southern League - South Division match between Larkhall Athlet
- ic and Malvern Town
-LOCATION:Plain Ham
+DESCRIPTION:Emirates FA Cup match between Beaconsfield Town and Larkhall A
+ thletic
+LOCATION:Holloways Park
 STATUS:CONFIRMED
 END:VEVENT
 BEGIN:VEVENT
-SUMMARY:Bristol Manor Farm vs Larkhall Athletic
-DTSTART:20250405T140000Z
-DTEND:20250405T154500Z
-DTSTAMP:20250328T164343Z
-UID:20250405-larkhall-bristol-manor-farm@larkhall-fixtures.example.com
+SUMMARY:Tavistock vs Larkhall Athletic
+DTSTART:20250906T140000Z
+DTEND:20250906T154500Z
+DTSTAMP:20250719T082402Z
+UID:20250906-larkhall-tavistock@larkhall-fixtures.example.com
 CATEGORIES:Football,Fixture
-DESCRIPTION:Southern League - South Division match between Bristol Manor F
- arm and Larkhall Athletic
-LOCATION:The Creek
-STATUS:CONFIRMED
-END:VEVENT
-BEGIN:VEVENT
-SUMMARY:Bishops Cleeve vs Larkhall Athletic
-DTSTART:20250412T140000Z
-DTEND:20250412T154500Z
-DTSTAMP:20250328T164343Z
-UID:20250412-larkhall-bishops-cleeve@larkhall-fixtures.example.com
-CATEGORIES:Football,Fixture
-DESCRIPTION:Southern League - South Division match between Bishops Cleeve 
- and Larkhall Athletic
-LOCATION:Kayte Lane
-STATUS:CONFIRMED
-END:VEVENT
-BEGIN:VEVENT
-SUMMARY:Falmouth Town vs Larkhall Athletic
-DTSTART:20250415T184500Z
-DTEND:20250415T203000Z
-DTSTAMP:20250328T164343Z
-UID:20250415-larkhall-falmouth-town@larkhall-fixtures.example.com
-CATEGORIES:Football,Fixture
-DESCRIPTION:Southern League - South Division match between Falmouth Town a
- nd Larkhall Athletic
-LOCATION:Bickland Park
-STATUS:CONFIRMED
-END:VEVENT
-BEGIN:VEVENT
-SUMMARY:Larkhall Athletic vs Willand Rovers
-DTSTART:20250419T140000Z
-DTEND:20250419T154500Z
-DTSTAMP:20250328T164343Z
-UID:20250419-larkhall-willand-rovers@larkhall-fixtures.example.com
-CATEGORIES:Football,Fixture
-DESCRIPTION:Southern League - South Division match between Larkhall Athlet
- ic and Willand Rovers
-LOCATION:Plain Ham
-STATUS:CONFIRMED
-END:VEVENT
-BEGIN:VEVENT
-SUMMARY:Shaftesbury vs Larkhall Athletic
-DTSTART:20250421T140000Z
-DTEND:20250421T154500Z
-DTSTAMP:20250328T164343Z
-UID:20250421-larkhall-shaftesbury@larkhall-fixtures.example.com
-CATEGORIES:Football,Fixture
-DESCRIPTION:Southern League - South Division match between Shaftesbury and
-  Larkhall Athletic
-LOCATION:Cockrams
-STATUS:CONFIRMED
-END:VEVENT
-BEGIN:VEVENT
-SUMMARY:Larkhall Athletic vs Exmouth Town
-DTSTART:20250426T140000Z
-DTEND:20250426T154500Z
-DTSTAMP:20250328T164343Z
-UID:20250426-larkhall-exmouth-town@larkhall-fixtures.example.com
-CATEGORIES:Football,Fixture
-DESCRIPTION:Southern League - South Division match between Larkhall Athlet
- ic and Exmouth Town
-LOCATION:Plain Ham
+DESCRIPTION:Isuzu FA Trophy match between Tavistock and Larkhall Athletic
+LOCATION:Langsford Park
 STATUS:CONFIRMED
 END:VEVENT
 END:VCALENDAR
