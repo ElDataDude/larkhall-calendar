@@ -1,0 +1,28 @@
+# GitHub Pages Configuration
+title: Larkhall Athletic Fixtures Calendar
+description: Automatically updating calendar for Larkhall Athletic fixtures
+baseurl: "/larkhall-calendar"
+url: "https://eldatadude.github.io"
+
+# Build settings
+markdown: kramdown
+theme: jekyll-theme-minimal
+plugins:
+  - jekyll-feed
+
+# Include files that would normally be excluded
+include:
+  - fixtures.ics
+
+# Exclude from processing
+exclude:
+  - .git/
+  - .github/
+  - venv/
+  - src/
+  - memory-bank/
+  - setup.sh
+  - requirements.txt
+  - .env
+  - DEPLOYMENT.md
+  - LICENSE
