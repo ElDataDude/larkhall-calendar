@@ -9,7 +9,11 @@ Usage:
     python test_api.py
 
 Environment Variables:
-    RAPIDAPI_KEY: API key for FootballWebPages API
+    RAPIDAPI_KEY: API key for FootballWebPages API (required)
+
+Author: ElDataDude
+Version: 1.0.0
+Last Updated: March 28, 2025
 """
 
 import os

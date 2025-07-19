@@ -7,6 +7,10 @@ formatted and compatible with calendar applications.
 
 Usage:
     python validate_calendar.py [path_to_ics_file]
+
+Author: ElDataDude
+Version: 1.0.0
+Last Updated: March 28, 2025
 """
 
 import sys

@@ -2,6 +2,8 @@
 
 This guide provides step-by-step instructions for deploying the Larkhall Athletic Fixtures Calendar to GitHub Pages.
 
+*Last Updated: March 28, 2025*
+
 ## Prerequisites
 
 - GitHub account

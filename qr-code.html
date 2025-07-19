@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Larkhall Athletic Fixtures Calendar - QR Code</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+            color: #333;
+            text-align: center;
+        }
+        h1 {
+            color: #1a365d;
+        }
+        .qr-container {
+            margin: 30px auto;
+            max-width: 300px;
+        }
+        .instructions {
+            margin: 30px 0;
+            text-align: left;
+        }
+        .print-button {
+            display: inline-block;
+            background-color: #1a365d;
+            color: white;
+            padding: 10px 20px;
+            text-decoration: none;
+            border-radius: 5px;
+            margin-top: 20px;
+            cursor: pointer;
+        }
+        .print-button:hover {
+            background-color: #2c4c7c;
+        }
+        @media print {
+            .no-print {
+                display: none;
+            }
+        }
+    </style>
+</head>
+<body>
+    <h1>Larkhall Athletic Fixtures Calendar</h1>
+    <p>Scan this QR code to subscribe to the Larkhall Athletic fixtures calendar</p>
+    
+    <div class="qr-container">
+        <!-- QR code will be inserted here by JavaScript -->
+        <div id="qrcode"></div>
+    </div>
+    
+    <div class="instructions">
+        <h2>How to use this QR code:</h2>
+        <ol>
+            <li>Open your phone's camera app</li>
+            <li>Point it at the QR code above</li>
+            <li>Tap the notification that appears</li>
+            <li>Follow the instructions to subscribe to the calendar</li>
+        </ol>
+    </div>
+    
+    <div class="google-calendar-section no-print">
+        <h2>Google Calendar Users</h2>
+        <p>For Google Calendar users, scan this QR code for one-click subscription:</p>
+        <div class="qr-container">
+            <div id="google-qrcode"></div>
+        </div>
+        <a href="https://calendar.google.com/calendar/r/settings/addbyurl?url=https%3A%2F%2Feldatadude.github.io%2Flarkhall-calendar%2Ffixtures.ics" class="print-button" style="background-color: #4285F4; margin-right: 10px;" target="_blank">Add to Google Calendar</a>
+    </div>
+    
+    <button class="print-button no-print" onclick="window.print()">Print QR Code</button>
+    
+    <!-- Include QRCode.js library -->
+    <script src="https://cdn.jsdelivr.net/npm/qrcodejs@1.0.0/qrcode.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Create standard calendar QR code
+            new QRCode(document.getElementById("qrcode"), {
+                text: "https://eldatadude.github.io/larkhall-calendar/fixtures.ics",
+                width: 256,
+                height: 256,
+                colorDark: "#1a365d",
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+            
+            // Create Google Calendar one-click subscription QR code
+            new QRCode(document.getElementById("google-qrcode"), {
+                text: "https://calendar.google.com/calendar/r/settings/addbyurl?url=https%3A%2F%2Feldatadude.github.io%2Flarkhall-calendar%2Ffixtures.ics",
+                width: 256,
+                height: 256,
+                colorDark: "#4285F4", // Google blue
+                colorLight: "#ffffff",
+                correctLevel: QRCode.CorrectLevel.H
+            });
+        });
+    </script>
+</body>
+</html>

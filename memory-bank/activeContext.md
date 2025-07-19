@@ -2,20 +2,31 @@
 
 ## Current Work Focus
 
-As of March 28, 2025, the project is **in deployment process with challenges**. The current focus is on:
+As of March 28, 2025, the project is **in deployment process with progress on technical issues**. The current focus is on:
 
 1. **Resolving GitHub Pages and GitHub Actions Issues**
    - GitHub repository created
-   - GitHub Pages configured but not serving content (404 error)
-   - API key set up as repository secret
-   - GitHub Actions workflow not appearing in Actions tab
+   - GitHub Actions workflow permission issues resolved
+   - Implemented comprehensive fixes for GitHub Pages 404 error:
+     - Created .nojekyll file to disable Jekyll processing
+     - Added _config.yml with explicit Jekyll configuration
+     - Created dedicated GitHub Pages workflow (.github/workflows/pages.yml)
+     - Added test.md file to verify deployment
+     - Updated documentation with detailed troubleshooting steps
 
-2. **Subscription Testing**
+2. **Improving User Accessibility**
+   - Created QR code generator for easy calendar subscription
+   - Developed simplified subscription guide for non-technical users
+   - Updated README and index.html with correct information
+   - Implemented one-click Google Calendar subscription button
+   - Added dedicated Google Calendar QR code for mobile users
+
+3. **Subscription Testing**
    - Testing subscription across different platforms
    - Ensuring calendar compatibility
    - Verifying update mechanisms
 
-3. **Monitoring and Maintenance**
+4. **Monitoring and Maintenance**
    - Monitoring the automated updates
    - Addressing any issues that arise
    - Gathering user feedback
@@ -84,16 +95,16 @@ As of March 28, 2025, the project is **in deployment process with challenges**. 
 
 ### Immediate (Next 1-2 Days)
 
-1. Deploy to GitHub Pages
-   - Create GitHub repository
-   - Push code to repository
-   - Configure GitHub Pages
-   - Set up API key as repository secret
+1. Fix GitHub Pages 404 Error
+   - Verify GitHub Pages settings in repository configuration
+   - Ensure correct branch is selected (main)
+   - Ensure root directory is set as publishing source
+   - Check for any build errors in Actions tab
 
 2. Test public deployment
-   - Verify GitHub Actions workflow runs successfully
-   - Confirm calendar updates automatically
-   - Test subscription URL
+   - Confirm calendar updates automatically (GitHub Actions now working)
+   - Test subscription URL once GitHub Pages is accessible
+   - Test QR code functionality
 
 ### Short-Term (Next 3-5 Days)
 
@@ -106,11 +117,12 @@ As of March 28, 2025, the project is **in deployment process with challenges**. 
    - Subscribe to calendar on multiple platforms
    - Verify event display
    - Check update propagation
+   - Test with QR code and simplified guide
 
-3. Document findings
-   - Update documentation with real-world observations
-   - Document any workarounds or special considerations
-   - Finalize user instructions
+3. Improve user accessibility
+   - Share QR code and subscription guide with Larkhall supporters
+   - Consider creating printable materials for match days
+   - Explore options for integration with club website or social media
 
 ### Medium-Term (Next 2-4 Weeks)
 
@@ -140,12 +152,23 @@ As of March 28, 2025, the project is **in deployment process with challenges**. 
 
 ## Current Blockers
 
-1. **GitHub Actions Workflow**: Workflow files pushed to repository but not appearing in Actions tab
-   - Multiple approaches attempted including renaming workflow file
-   - Manual generation of fixtures.ics file completed as workaround
+1. **GitHub Actions Workflow**: ✅ Resolved
+   - Permission issues fixed
+   - Automated updates now working correctly
 
-2. **GitHub Pages Configuration**: Pages configured but returning 404 error
-   - Need to investigate GitHub Pages settings and branch configuration
+2. **GitHub Pages Configuration**: Comprehensive fixes implemented
+   - Implemented multiple solutions to address 404 error:
+     - Created .nojekyll file to disable Jekyll processing
+     - Added _config.yml with explicit Jekyll configuration
+     - Created dedicated GitHub Pages workflow (.github/workflows/pages.yml)
+     - Added test.md file to verify deployment
+     - Updated documentation with detailed troubleshooting steps
+   - Next steps:
+     - Monitor GitHub Actions workflow for the Pages deployment
+     - Verify site accessibility after changes propagate
+     - Check if test.md is accessible as an indicator of successful deployment
 
-3. **Subscription Testing**: Cannot proceed until public URL is accessible
-   - Blocked by GitHub Pages issues
+3. **Subscription Testing**: Partially unblocked
+   - Created QR code and simplified guide for easier subscription
+   - Still need public URL to be accessible for full testing
+   - Can test with direct file subscription as workaround
