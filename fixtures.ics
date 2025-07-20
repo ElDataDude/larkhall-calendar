@@ -11,7 +11,7 @@ BEGIN:VEVENT
 SUMMARY:Beaconsfield Town vs Larkhall Athletic
 DTSTART:20250802T140000Z
 DTEND:20250802T154500Z
-DTSTAMP:20250719T084721Z
+DTSTAMP:20250720T043716Z
 UID:20250802-larkhall-beaconsfield-town@larkhall-fixtures.example.com
 CATEGORIES:Football,Fixture
 DESCRIPTION:Emirates FA Cup match between Beaconsfield Town and Larkhall A
@@ -23,7 +23,7 @@ BEGIN:VEVENT
 SUMMARY:Tavistock vs Larkhall Athletic
 DTSTART:20250906T140000Z
 DTEND:20250906T154500Z
-DTSTAMP:20250719T084721Z
+DTSTAMP:20250720T043716Z
 UID:20250906-larkhall-tavistock@larkhall-fixtures.example.com
 CATEGORIES:Football,Fixture
 DESCRIPTION:Isuzu FA Trophy match between Tavistock and Larkhall Athletic
