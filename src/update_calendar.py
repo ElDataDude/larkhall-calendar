@@ -11,7 +11,8 @@ Usage:
     python update_calendar.py
 
 Environment Variables:
-    RAPIDAPI_KEY: API key for FootballWebPages API (required)
+    FOOTBALL_WEB_PAGES_API_KEY: API key for FootballWebPages API (required)
+    (RAPIDAPI_KEY is also supported for backward compatibility)
 
 Author: ElDataDude
 Version: 1.0.0
@@ -42,7 +43,7 @@ logger = logging.getLogger("calendar_updater")
 
 # Constants
 TEAM_ID = 1169  # Larkhall Athletic
-API_ENDPOINT = "https://football-web-pages1.p.rapidapi.com/fixtures-results.json"
+API_ENDPOINT = "https://www.footballwebpages.co.uk/api/fixtures-results.json"
 OUTPUT_FILE = "fixtures.ics"
 CALENDAR_NAME = "Larkhall Athletic Fixtures"
 CALENDAR_DESCRIPTION = "Official fixtures calendar for Larkhall Athletic Football Club"
@@ -84,10 +85,12 @@ def get_api_key() -> str:
     Raises:
         EnvironmentError: If the API key is not found
     """
-    api_key = os.environ.get("RAPIDAPI_KEY")
+    api_key = os.environ.get("FOOTBALL_WEB_PAGES_API_KEY") or os.environ.get(
+        "RAPIDAPI_KEY"
+    )
     if not api_key:
         raise EnvironmentError(
-            "API key not found. Please set the RAPIDAPI_KEY environment variable."
+            "API key not found. Please set the FOOTBALL_WEB_PAGES_API_KEY environment variable."
         )
     return api_key
 
@@ -105,16 +108,14 @@ def fetch_fixtures(api_key: str) -> Dict[str, Any]:
     Raises:
         requests.RequestException: If the API request fails
     """
-    headers = {
-        "X-RapidAPI-Key": api_key
-    }
     params = {
-        "team": TEAM_ID
+        "team": TEAM_ID,
+        "key": api_key
     }
-    
+
     try:
         logger.info(f"Fetching fixtures for team ID {TEAM_ID}")
-        response = requests.get(API_ENDPOINT, headers=headers, params=params)
+        response = requests.get(API_ENDPOINT, params=params)
         response.raise_for_status()
         return response.json()
     except requests.RequestException as e:

@@ -115,7 +115,7 @@ The calendar update process follows these steps:
 3. Configure your environment
    ```bash
    # Edit .env file with your API key
-   echo "RAPIDAPI_KEY=your_api_key_here" > .env
+   echo "FOOTBALL_WEB_PAGES_API_KEY=your_api_key_here" > .env
    ```
 
 ### Manual Update

@@ -9,7 +9,8 @@ Usage:
     python test_api.py
 
 Environment Variables:
-    RAPIDAPI_KEY: API key for FootballWebPages API (required)
+    FOOTBALL_WEB_PAGES_API_KEY: API key for FootballWebPages API (required)
+    (RAPIDAPI_KEY is also supported for backward compatibility)
 
 Author: ElDataDude
 Version: 1.0.0
@@ -26,15 +27,17 @@ load_dotenv()
 
 # Constants
 TEAM_ID = 1169  # Larkhall Athletic
-API_ENDPOINT = "https://football-web-pages1.p.rapidapi.com/fixtures-results.json"
+API_ENDPOINT = "https://www.footballwebpages.co.uk/api/fixtures-results.json"
 
 
 def get_api_key():
     """Retrieve the API key from environment variables."""
-    api_key = os.environ.get("RAPIDAPI_KEY")
+    api_key = os.environ.get("FOOTBALL_WEB_PAGES_API_KEY") or os.environ.get(
+        "RAPIDAPI_KEY"
+    )
     if not api_key:
         raise EnvironmentError(
-            "API key not found. Please set the RAPIDAPI_KEY environment variable."
+            "API key not found. Please set the FOOTBALL_WEB_PAGES_API_KEY environment variable."
         )
     return api_key
 
@@ -43,17 +46,15 @@ def test_api():
     """Make a test call to the API and print the response structure."""
     api_key = get_api_key()
     
-    headers = {
-        "X-RapidAPI-Key": api_key
-    }
     params = {
-        "team": TEAM_ID
+        "team": TEAM_ID,
+        "key": api_key
     }
     
     print(f"Making API request to {API_ENDPOINT} for team ID {TEAM_ID}...")
     
     try:
-        response = requests.get(API_ENDPOINT, headers=headers, params=params)
+        response = requests.get(API_ENDPOINT, params=params)
         response.raise_for_status()
         data = response.json()
         

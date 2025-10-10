@@ -6,17 +6,18 @@ The FootballWebPages API provides access to football-related data, including fix
 
 ## Authentication
 
-The API is accessed through RapidAPI and requires an API key for authentication:
+The API is accessed directly from Football Web Pages and requires an API key
+supplied as a query parameter:
 
-- **API Key**: `6d626c9a04msh0f4f53d3232ec82p1b9746jsn7c06d25015f0`
-- **Header**: `X-RapidAPI-Key`
+- **Query Parameter**: `key`
+- **Environment Variable**: `FOOTBALL_WEB_PAGES_API_KEY`
 
 ## Endpoints
 
 ### Fixtures and Results
 
 ```
-GET https://football-web-pages1.p.rapidapi.com/fixtures-results.json
+GET https://www.footballwebpages.co.uk/api/fixtures-results.json
 ```
 
 #### Parameters
@@ -24,25 +25,17 @@ GET https://football-web-pages1.p.rapidapi.com/fixtures-results.json
 | Parameter | Required | Description | Example |
 |-----------|----------|-------------|---------|
 | team | Yes | Team ID | 1169 (Larkhall Athletic) |
-
-#### Headers
-
-| Header | Value |
-|--------|-------|
-| X-RapidAPI-Key | 6d626c9a04msh0f4f53d3232ec82p1b9746jsn7c06d25015f0 |
+| key | Yes | API key provided by Football Web Pages | `your_api_key` |
 
 #### Example Request
 
 ```python
 import requests
 
-url = "https://football-web-pages1.p.rapidapi.com/fixtures-results.json"
-querystring = {"team": "1169"}
-headers = {
-    "X-RapidAPI-Key": "6d626c9a04msh0f4f53d3232ec82p1b9746jsn7c06d25015f0"
-}
+url = "https://www.footballwebpages.co.uk/api/fixtures-results.json"
+querystring = {"team": "1169", "key": "your_api_key"}
 
-response = requests.get(url, headers=headers, params=querystring)
+response = requests.get(url, params=querystring)
 ```
 
 #### Response Structure
@@ -75,7 +68,7 @@ The API returns a JSON object containing fixture information. The exact structur
 ### League Table
 
 ```
-GET https://football-web-pages1.p.rapidapi.com/league-table.json
+GET https://www.footballwebpages.co.uk/api/league-table.json
 ```
 
 #### Parameters
@@ -83,25 +76,17 @@ GET https://football-web-pages1.p.rapidapi.com/league-table.json
 | Parameter | Required | Description | Example |
 |-----------|----------|-------------|---------|
 | team | Yes | Team ID | 1169 (Larkhall Athletic) |
-
-#### Headers
-
-| Header | Value |
-|--------|-------|
-| X-RapidAPI-Key | 6d626c9a04msh0f4f53d3232ec82p1b9746jsn7c06d25015f0 |
+| key | Yes | API key provided by Football Web Pages | `your_api_key` |
 
 #### Example Request
 
 ```python
 import requests
 
-url = "https://football-web-pages1.p.rapidapi.com/league-table.json"
-querystring = {"team": "1169"}
-headers = {
-    "X-RapidAPI-Key": "6d626c9a04msh0f4f53d3232ec82p1b9746jsn7c06d25015f0"
-}
+url = "https://www.footballwebpages.co.uk/api/league-table.json"
+querystring = {"team": "1169", "key": "your_api_key"}
 
-response = requests.get(url, headers=headers, params=querystring)
+response = requests.get(url, params=querystring)
 ```
 
 ## Team Information
@@ -142,7 +127,9 @@ The API may return various HTTP status codes:
 
 ## Rate Limits
 
-The specific rate limits for the FootballWebPages API through RapidAPI are not explicitly stated in the provided information. However, for our daily update use case, we should be well within typical API rate limits.
+The specific rate limits for the direct FootballWebPages API are not publicly
+documented. However, for our daily update use case, we should be well within
+typical API rate limits.
 
 ## API Testing Notes
 
