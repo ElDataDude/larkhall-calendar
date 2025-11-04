@@ -44,8 +44,8 @@
 
 ### FootballWebPages API
 
-- **Endpoint**: `https://football-web-pages1.p.rapidapi.com/fixtures-results.json`
-- **Authentication**: RapidAPI Key (Header: `X-RapidAPI-Key`)
+- **Endpoint**: `https://www.footballwebpages.co.uk/api/fixtures-results.json`
+- **Authentication**: Football Web Pages API key (Query parameter: `key`)
 - **Parameters**:
   - `team`: 1169 (Larkhall Athletic ID)
 - **Rate Limits**: Unknown (assumed to be sufficient for daily updates)
@@ -95,7 +95,7 @@
 - **Environment**: Ubuntu latest
 - **Python Version**: 3.9
 - **Environment Variables**:
-  - `RAPIDAPI_KEY`: Secret API key for FootballWebPages
+  - `FOOTBALL_WEB_PAGES_API_KEY`: Secret API key for FootballWebPages
 
 ### GitHub Pages Configuration
 

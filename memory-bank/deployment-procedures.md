@@ -46,13 +46,13 @@ This document outlines the complete deployment process for the Larkhall Athletic
    - For local development:
      ```bash
      # Create .env file (add to .gitignore)
-     echo "RAPIDAPI_KEY=6d626c9a04msh0f4f53d3232ec82p1b9746jsn7c06d25015f0" > .env
+     echo "FOOTBALL_WEB_PAGES_API_KEY=your_api_key" > .env
      ```
    - For GitHub Actions:
      - Go to repository Settings > Secrets
      - Add new repository secret:
-       - Name: `RAPIDAPI_KEY`
-       - Value: `6d626c9a04msh0f4f53d3232ec82p1b9746jsn7c06d25015f0`
+       - Name: `FOOTBALL_WEB_PAGES_API_KEY`
+       - Value: `<your_api_key>`
 
 ### 3. GitHub Pages Configuration
 
@@ -108,7 +108,7 @@ GitHub Actions workflow runs automatically:
 - name: Update calendar
   run: python src/update_calendar.py
   env:
-    RAPIDAPI_KEY: ${{ secrets.RAPIDAPI_KEY }}
+    FOOTBALL_WEB_PAGES_API_KEY: ${{ secrets.FOOTBALL_WEB_PAGES_API_KEY }}
 ```
 
 ### 4. Commit and Push Changes
@@ -134,7 +134,7 @@ In case manual deployment is needed:
 source venv/bin/activate  # On Windows: venv\Scripts\activate
 
 # Set API key
-export RAPIDAPI_KEY=6d626c9a04msh0f4f53d3232ec82p1b9746jsn7c06d25015f0
+export FOOTBALL_WEB_PAGES_API_KEY=your_api_key
 
 # Run update script
 python src/update_calendar.py
@@ -173,8 +173,9 @@ If the API is unavailable or returns errors:
 
 ```bash
 # Check API status manually
-curl -X GET "https://football-web-pages1.p.rapidapi.com/fixtures-results.json?team=1169" \
-  -H "X-RapidAPI-Key: 6d626c9a04msh0f4f53d3232ec82p1b9746jsn7c06d25015f0"
+curl -G "https://www.footballwebpages.co.uk/api/fixtures-results.json" \
+  --data-urlencode "team=1169" \
+  --data-urlencode "key=$FOOTBALL_WEB_PAGES_API_KEY"
 ```
 
 ### 2. GitHub Actions Failures

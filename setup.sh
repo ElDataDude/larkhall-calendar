@@ -17,8 +17,8 @@ pip install -r requirements.txt
 # Create empty .env file if it doesn't exist
 if [ ! -f .env ]; then
     echo "Creating .env file..."
-    echo "RAPIDAPI_KEY=your_api_key_here" > .env
-    echo "Please edit .env file and add your API key."
+    echo "FOOTBALL_WEB_PAGES_API_KEY=your_api_key_here" > .env
+    echo "Please edit .env file and add your Football Web Pages API key."
 fi
 
 echo ""

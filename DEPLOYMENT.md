@@ -44,7 +44,7 @@ This guide provides step-by-step instructions for deploying the Larkhall Athleti
 
 1. In your GitHub repository, go to "Settings" > "Secrets and variables" > "Actions"
 2. Click "New repository secret"
-3. Name: `RAPIDAPI_KEY`
+3. Name: `FOOTBALL_WEB_PAGES_API_KEY`
 4. Value: Your FootballWebPages API key
 5. Click "Add secret"
 
