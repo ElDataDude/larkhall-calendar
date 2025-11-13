@@ -30,7 +30,7 @@ jobs:
           
       - name: Update calendar
         env:
-          RAPIDAPI_KEY: ${{ secrets.RAPIDAPI_KEY }}
+          FOOTBALL_WEB_PAGES_API_KEY: ${{ secrets.FOOTBALL_WEB_PAGES_API_KEY }}
         run: |
           python src/update_calendar.py
           
