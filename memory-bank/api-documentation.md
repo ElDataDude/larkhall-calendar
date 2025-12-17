@@ -6,36 +6,49 @@ The FootballWebPages API provides access to football-related data, including fix
 
 ## Authentication
 
-The API is accessed directly from Football Web Pages and requires an API key
-supplied as a query parameter:
+The API (v2) is accessed directly from Football Web Pages and requires an API key
+supplied as a header:
 
-- **Query Parameter**: `key`
+- **Header**: `FWP-API-Key`
 - **Environment Variable**: `FOOTBALL_WEB_PAGES_API_KEY`
+
+## Rate Limiting
+
+Requests are capped at 10 per minute. Higher limits require email approval from Football Web Pages.
 
 ## Endpoints
 
+### Base URL
+
+```text
+https://api.footballwebpages.co.uk/v2/
+```
+
 ### Fixtures and Results
 
-```
-GET https://www.footballwebpages.co.uk/api/fixtures-results.json
+```text
+GET https://api.footballwebpages.co.uk/v2/fixtures-results.json
 ```
 
 #### Parameters
 
 | Parameter | Required | Description | Example |
 |-----------|----------|-------------|---------|
-| team | Yes | Team ID | 1169 (Larkhall Athletic) |
-| key | Yes | API key provided by Football Web Pages | `your_api_key` |
+| team | Yes* | Team ID | 1169 (Larkhall Athletic) |
+| comp | Yes* | Competition ID | (alternative to team) |
+
+*One of `team` or `comp` is required.
 
 #### Example Request
 
 ```python
 import requests
 
-url = "https://www.footballwebpages.co.uk/api/fixtures-results.json"
-querystring = {"team": "1169", "key": "your_api_key"}
+url = "https://api.footballwebpages.co.uk/v2/fixtures-results.json"
+headers = {"FWP-API-Key": "your_api_key"}
+params = {"team": "1169"}
 
-response = requests.get(url, params=querystring)
+response = requests.get(url, headers=headers, params=params)
 ```
 
 #### Response Structure
@@ -67,26 +80,29 @@ The API returns a JSON object containing fixture information. The exact structur
 
 ### League Table
 
-```
-GET https://www.footballwebpages.co.uk/api/league-table.json
+```text
+GET https://api.footballwebpages.co.uk/v2/league-table.json
 ```
 
-#### Parameters
+#### League Table Parameters
 
 | Parameter | Required | Description | Example |
 |-----------|----------|-------------|---------|
-| team | Yes | Team ID | 1169 (Larkhall Athletic) |
-| key | Yes | API key provided by Football Web Pages | `your_api_key` |
+| team | Yes* | Team ID | 1169 (Larkhall Athletic) |
+| comp | Yes* | Competition ID | (alternative to team) |
 
-#### Example Request
+*One of `team` or `comp` is required.
+
+#### League Table Example
 
 ```python
 import requests
 
-url = "https://www.footballwebpages.co.uk/api/league-table.json"
-querystring = {"team": "1169", "key": "your_api_key"}
+url = "https://api.footballwebpages.co.uk/v2/league-table.json"
+headers = {"FWP-API-Key": "your_api_key"}
+params = {"team": "1169"}
 
-response = requests.get(url, params=querystring)
+response = requests.get(url, headers=headers, params=params)
 ```
 
 ## Team Information

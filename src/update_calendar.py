@@ -43,7 +43,7 @@ logger = logging.getLogger("calendar_updater")
 
 # Constants
 TEAM_ID = 1169  # Larkhall Athletic
-API_ENDPOINT = "https://www.footballwebpages.co.uk/api/fixtures-results.json"
+API_ENDPOINT = "https://api.footballwebpages.co.uk/v2/fixtures-results.json"
 OUTPUT_FILE = "fixtures.ics"
 CALENDAR_NAME = "Larkhall Athletic Fixtures"
 CALENDAR_DESCRIPTION = "Official fixtures calendar for Larkhall Athletic Football Club"
@@ -98,24 +98,26 @@ def get_api_key() -> str:
 def fetch_fixtures(api_key: str) -> Dict[str, Any]:
     """
     Fetch fixture data from the FootballWebPages API.
-    
+
     Args:
         api_key: The API key for authentication
-        
+
     Returns:
         Dict[str, Any]: The JSON response from the API
-        
+
     Raises:
         requests.RequestException: If the API request fails
     """
+    headers = {
+        "FWP-API-Key": api_key
+    }
     params = {
-        "team": TEAM_ID,
-        "key": api_key
+        "team": TEAM_ID
     }
 
     try:
         logger.info(f"Fetching fixtures for team ID {TEAM_ID}")
-        response = requests.get(API_ENDPOINT, params=params)
+        response = requests.get(API_ENDPOINT, headers=headers, params=params)
         response.raise_for_status()
         return response.json()
     except requests.RequestException as e:

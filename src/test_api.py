@@ -27,7 +27,7 @@ load_dotenv()
 
 # Constants
 TEAM_ID = 1169  # Larkhall Athletic
-API_ENDPOINT = "https://www.footballwebpages.co.uk/api/fixtures-results.json"
+API_ENDPOINT = "https://api.footballwebpages.co.uk/v2/fixtures-results.json"
 
 
 def get_api_key():
@@ -45,16 +45,18 @@ def get_api_key():
 def test_api():
     """Make a test call to the API and print the response structure."""
     api_key = get_api_key()
-    
-    params = {
-        "team": TEAM_ID,
-        "key": api_key
+
+    headers = {
+        "FWP-API-Key": api_key
     }
-    
+    params = {
+        "team": TEAM_ID
+    }
+
     print(f"Making API request to {API_ENDPOINT} for team ID {TEAM_ID}...")
-    
+
     try:
-        response = requests.get(API_ENDPOINT, params=params)
+        response = requests.get(API_ENDPOINT, headers=headers, params=params)
         response.raise_for_status()
         data = response.json()
         
