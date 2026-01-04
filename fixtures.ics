@@ -8,22 +8,10 @@ X-WR-CALDESC:Official fixtures calendar for Larkhall Athletic Football Clu
 X-WR-CALNAME:Larkhall Athletic Fixtures
 X-WR-TIMEZONE:Europe/London
 BEGIN:VEVENT
-SUMMARY:Melksham Town vs Larkhall Athletic
-DTSTART:20260103T150000Z
-DTEND:20260103T164500Z
-DTSTAMP:20260103T042721Z
-UID:20260103-larkhall-melksham-town@larkhall-fixtures.example.com
-CATEGORIES:Football,Fixture
-DESCRIPTION:Southern League - South Division match between Melksham Town a
- nd Larkhall Athletic
-LOCATION:Oakfield Stadium
-STATUS:CONFIRMED
-END:VEVENT
-BEGIN:VEVENT
 SUMMARY:Tavistock vs Larkhall Athletic
 DTSTART:20260107T194500Z
 DTEND:20260107T213000Z
-DTSTAMP:20260103T042721Z
+DTSTAMP:20260104T044327Z
 UID:20260107-larkhall-tavistock@larkhall-fixtures.example.com
 CATEGORIES:Football,Fixture
 DESCRIPTION:Southern League - South Division match between Tavistock and L
@@ -35,7 +23,7 @@ BEGIN:VEVENT
 SUMMARY:Westbury United vs Larkhall Athletic
 DTSTART:20260110T150000Z
 DTEND:20260110T164500Z
-DTSTAMP:20260103T042721Z
+DTSTAMP:20260104T044327Z
 UID:20260110-larkhall-westbury-united@larkhall-fixtures.example.com
 CATEGORIES:Football,Fixture
 DESCRIPTION:Southern League - South Division match between Westbury United
@@ -47,7 +35,7 @@ BEGIN:VEVENT
 SUMMARY:Larkhall Athletic vs Exmouth Town
 DTSTART:20260117T150000Z
 DTEND:20260117T164500Z
-DTSTAMP:20260103T042721Z
+DTSTAMP:20260104T044327Z
 UID:20260117-larkhall-exmouth-town@larkhall-fixtures.example.com
 CATEGORIES:Football,Fixture
 DESCRIPTION:Southern League - South Division match between Larkhall Athlet
@@ -59,7 +47,7 @@ BEGIN:VEVENT
 SUMMARY:Hartpury vs Larkhall Athletic
 DTSTART:20260124T150000Z
 DTEND:20260124T164500Z
-DTSTAMP:20260103T042721Z
+DTSTAMP:20260104T044327Z
 UID:20260124-larkhall-hartpury@larkhall-fixtures.example.com
 CATEGORIES:Football,Fixture
 DESCRIPTION:Southern League - South Division match between Hartpury and La
@@ -71,7 +59,7 @@ BEGIN:VEVENT
 SUMMARY:Larkhall Athletic vs Didcot Town
 DTSTART:20260131T150000Z
 DTEND:20260131T164500Z
-DTSTAMP:20260103T042721Z
+DTSTAMP:20260104T044327Z
 UID:20260131-larkhall-didcot-town@larkhall-fixtures.example.com
 CATEGORIES:Football,Fixture
 DESCRIPTION:Southern League - South Division match between Larkhall Athlet
@@ -83,7 +71,7 @@ BEGIN:VEVENT
 SUMMARY:Willand Rovers vs Larkhall Athletic
 DTSTART:20260207T150000Z
 DTEND:20260207T164500Z
-DTSTAMP:20260103T042721Z
+DTSTAMP:20260104T044327Z
 UID:20260207-larkhall-willand-rovers@larkhall-fixtures.example.com
 CATEGORIES:Football,Fixture
 DESCRIPTION:Southern League - South Division match between Willand Rovers 
@@ -95,7 +83,7 @@ BEGIN:VEVENT
 SUMMARY:Larkhall Athletic vs Sporting Club Inkberrow
 DTSTART:20260214T150000Z
 DTEND:20260214T164500Z
-DTSTAMP:20260103T042721Z
+DTSTAMP:20260104T044327Z
 UID:20260214-larkhall-sporting-club-inkberrow@larkhall-fixtures.example.co
  m
 CATEGORIES:Football,Fixture
@@ -108,7 +96,7 @@ BEGIN:VEVENT
 SUMMARY:Larkhall Athletic vs Frome Town
 DTSTART:20260221T150000Z
 DTEND:20260221T164500Z
-DTSTAMP:20260103T042721Z
+DTSTAMP:20260104T044327Z
 UID:20260221-larkhall-frome-town@larkhall-fixtures.example.com
 CATEGORIES:Football,Fixture
 DESCRIPTION:Southern League - South Division match between Larkhall Athlet
@@ -120,7 +108,7 @@ BEGIN:VEVENT
 SUMMARY:Swindon Supermarine vs Larkhall Athletic
 DTSTART:20260228T150000Z
 DTEND:20260228T164500Z
-DTSTAMP:20260103T042721Z
+DTSTAMP:20260104T044327Z
 UID:20260228-larkhall-swindon-supermarine@larkhall-fixtures.example.com
 CATEGORIES:Football,Fixture
 DESCRIPTION:Southern League - South Division match between Swindon Superma
@@ -132,7 +120,7 @@ BEGIN:VEVENT
 SUMMARY:Larkhall Athletic vs Shaftesbury
 DTSTART:20260307T150000Z
 DTEND:20260307T164500Z
-DTSTAMP:20260103T042721Z
+DTSTAMP:20260104T044327Z
 UID:20260307-larkhall-shaftesbury@larkhall-fixtures.example.com
 CATEGORIES:Football,Fixture
 DESCRIPTION:Southern League - South Division match between Larkhall Athlet
@@ -144,7 +132,7 @@ BEGIN:VEVENT
 SUMMARY:Winchester City vs Larkhall Athletic
 DTSTART:20260314T150000Z
 DTEND:20260314T164500Z
-DTSTAMP:20260103T042721Z
+DTSTAMP:20260104T044327Z
 UID:20260314-larkhall-winchester-city@larkhall-fixtures.example.com
 CATEGORIES:Football,Fixture
 DESCRIPTION:Southern League - South Division match between Winchester City
@@ -156,7 +144,7 @@ BEGIN:VEVENT
 SUMMARY:Larkhall Athletic vs Brixham AFC
 DTSTART:20260321T150000Z
 DTEND:20260321T164500Z
-DTSTAMP:20260103T042721Z
+DTSTAMP:20260104T044327Z
 UID:20260321-larkhall-brixham-afc@larkhall-fixtures.example.com
 CATEGORIES:Football,Fixture
 DESCRIPTION:Southern League - South Division match between Larkhall Athlet
@@ -168,7 +156,7 @@ BEGIN:VEVENT
 SUMMARY:Falmouth Town vs Larkhall Athletic
 DTSTART:20260328T150000Z
 DTEND:20260328T164500Z
-DTSTAMP:20260103T042721Z
+DTSTAMP:20260104T044327Z
 UID:20260328-larkhall-falmouth-town@larkhall-fixtures.example.com
 CATEGORIES:Football,Fixture
 DESCRIPTION:Southern League - South Division match between Falmouth Town a
@@ -180,7 +168,7 @@ BEGIN:VEVENT
 SUMMARY:Larkhall Athletic vs Portishead Town
 DTSTART:20260403T140000Z
 DTEND:20260403T154500Z
-DTSTAMP:20260103T042721Z
+DTSTAMP:20260104T044327Z
 UID:20260403-larkhall-portishead-town@larkhall-fixtures.example.com
 CATEGORIES:Football,Fixture
 DESCRIPTION:Southern League - South Division match between Larkhall Athlet
@@ -192,7 +180,7 @@ BEGIN:VEVENT
 SUMMARY:Bristol Manor Farm vs Larkhall Athletic
 DTSTART:20260406T140000Z
 DTEND:20260406T154500Z
-DTSTAMP:20260103T042721Z
+DTSTAMP:20260104T044327Z
 UID:20260406-larkhall-bristol-manor-farm@larkhall-fixtures.example.com
 CATEGORIES:Football,Fixture
 DESCRIPTION:Southern League - South Division match between Bristol Manor F
@@ -204,7 +192,7 @@ BEGIN:VEVENT
 SUMMARY:Larkhall Athletic vs Bideford
 DTSTART:20260411T140000Z
 DTEND:20260411T154500Z
-DTSTAMP:20260103T042721Z
+DTSTAMP:20260104T044327Z
 UID:20260411-larkhall-bideford@larkhall-fixtures.example.com
 CATEGORIES:Football,Fixture
 DESCRIPTION:Southern League - South Division match between Larkhall Athlet
@@ -216,7 +204,7 @@ BEGIN:VEVENT
 SUMMARY:Bashley vs Larkhall Athletic
 DTSTART:20260418T140000Z
 DTEND:20260418T154500Z
-DTSTAMP:20260103T042721Z
+DTSTAMP:20260104T044327Z
 UID:20260418-larkhall-bashley@larkhall-fixtures.example.com
 CATEGORIES:Football,Fixture
 DESCRIPTION:Southern League - South Division match between Bashley and Lar
@@ -228,7 +216,7 @@ BEGIN:VEVENT
 SUMMARY:Larkhall Athletic vs Mousehole AFC
 DTSTART:20260425T140000Z
 DTEND:20260425T154500Z
-DTSTAMP:20260103T042721Z
+DTSTAMP:20260104T044327Z
 UID:20260425-larkhall-mousehole-afc@larkhall-fixtures.example.com
 CATEGORIES:Football,Fixture
 DESCRIPTION:Southern League - South Division match between Larkhall Athlet
