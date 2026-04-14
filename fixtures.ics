@@ -11,7 +11,7 @@ BEGIN:VEVENT
 SUMMARY:Willand Rovers vs Larkhall Athletic
 DTSTART:20260415T183000Z
 DTEND:20260415T201500Z
-DTSTAMP:20260413T060944Z
+DTSTAMP:20260414T055615Z
 UID:20260415-larkhall-willand-rovers@larkhall-fixtures.example.com
 CATEGORIES:Football,Fixture
 DESCRIPTION:Southern League - South Division match between Willand Rovers 
@@ -23,7 +23,7 @@ BEGIN:VEVENT
 SUMMARY:Bashley vs Larkhall Athletic
 DTSTART:20260418T140000Z
 DTEND:20260418T154500Z
-DTSTAMP:20260413T060944Z
+DTSTAMP:20260414T055615Z
 UID:20260418-larkhall-bashley@larkhall-fixtures.example.com
 CATEGORIES:Football,Fixture
 DESCRIPTION:Southern League - South Division match between Bashley and Lar
@@ -35,7 +35,7 @@ BEGIN:VEVENT
 SUMMARY:Larkhall Athletic vs Mousehole AFC
 DTSTART:20260425T140000Z
 DTEND:20260425T154500Z
-DTSTAMP:20260413T060944Z
+DTSTAMP:20260414T055615Z
 UID:20260425-larkhall-mousehole-afc@larkhall-fixtures.example.com
 CATEGORIES:Football,Fixture
 DESCRIPTION:Southern League - South Division match between Larkhall Athlet
