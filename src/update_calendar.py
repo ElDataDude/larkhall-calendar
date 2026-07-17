@@ -23,12 +23,18 @@ import os
 import sys
 import json
 import logging
-from datetime import datetime, timedelta
+import tempfile
+from datetime import date, datetime, timedelta
 from typing import Dict, List, Any, Optional
 import requests
 from icalendar import Calendar, Event
 import pytz
 from dotenv import load_dotenv
+
+try:
+    from .validate_calendar import validate_ics_file
+except ImportError:
+    from validate_calendar import validate_ics_file
 
 # Load environment variables from .env file
 load_dotenv()
@@ -49,6 +55,18 @@ CALENDAR_NAME = "Larkhall Athletic Fixtures"
 CALENDAR_DESCRIPTION = "Official fixtures calendar for Larkhall Athletic Football Club"
 HOME_VENUE = "Plain Ham, Bath"  # Default venue for home matches
 MATCH_DURATION = timedelta(hours=1, minutes=45)  # Typical football match duration
+REQUEST_TIMEOUT_SECONDS = 30
+UK_TIMEZONE = pytz.timezone("Europe/London")
+# With no future last-known-good baseline, reject implausibly small season bootstraps.
+BOOTSTRAP_MIN_UPCOMING_EVENTS = 10
+# Once a baseline exists, allow normal removals but reject material truncation.
+MIN_RETAINED_FUTURE_RATIO = 0.5
+TBC_TIME_VALUES = {"", "tbc", "tbd", "to be confirmed"}
+
+
+class FixtureDataError(ValueError):
+    """Raised when upstream data is unsafe to publish as a calendar."""
+
 
 # Team information mapping (ID to name)
 TEAM_INFO = {
@@ -117,15 +135,26 @@ def fetch_fixtures(api_key: str) -> Dict[str, Any]:
 
     try:
         logger.info(f"Fetching fixtures for team ID {TEAM_ID}")
-        response = requests.get(API_ENDPOINT, headers=headers, params=params)
+        response = requests.get(
+            API_ENDPOINT,
+            headers=headers,
+            params=params,
+            timeout=REQUEST_TIMEOUT_SECONDS,
+        )
         response.raise_for_status()
-        return response.json()
+        data = response.json()
+        if not isinstance(data, dict):
+            raise FixtureDataError("Football Web Pages returned a non-object response")
+        return data
     except requests.RequestException as e:
         logger.error(f"API request failed: {e}")
         raise
 
 
-def process_fixtures(data: Dict[str, Any]) -> List[Dict[str, Any]]:
+def process_fixtures(
+    data: Dict[str, Any],
+    now: Optional[datetime] = None,
+) -> List[Dict[str, Any]]:
     """
     Process the raw API response into a structured format.
     
@@ -135,27 +164,91 @@ def process_fixtures(data: Dict[str, Any]) -> List[Dict[str, Any]]:
     Returns:
         List[Dict[str, Any]]: A list of processed fixture data
     """
+    if not isinstance(data, dict):
+        raise FixtureDataError("Football Web Pages response must be an object")
+
+    fixture_results = data.get("fixtures-results")
+    if not isinstance(fixture_results, dict):
+        raise FixtureDataError("Response is missing the fixtures-results object")
+
+    raw_fixtures = fixture_results.get("matches")
+    if not isinstance(raw_fixtures, list):
+        raise FixtureDataError("Response fixtures-results.matches must be a list")
+    if not raw_fixtures:
+        logger.info("Football Web Pages returned an empty current fixture list")
+        return []
+
     fixtures = []
-    
-    # Get matches from the fixtures-results structure
-    raw_fixtures = data.get("fixtures-results", {}).get("matches", [])
+    reference_time = now or datetime.now(pytz.utc)
+    if reference_time.tzinfo is None:
+        reference_time = pytz.utc.localize(reference_time)
+    reference_date = reference_time.astimezone(UK_TIMEZONE).date()
     
     for fixture in raw_fixtures:
-        # Combine date and time fields
+        if not isinstance(fixture, dict):
+            raise FixtureDataError("Response contains a non-object match")
+
         date_str = fixture.get("date", "")
+        try:
+            match_date = datetime.strptime(date_str, "%Y-%m-%d").date()
+        except (TypeError, ValueError):
+            raise FixtureDataError(
+                f"Match {fixture.get('id', '<unknown>')} has no parseable date"
+            )
+
+        # Old malformed rows cannot affect the upcoming published calendar.
+        if match_date < reference_date:
+            continue
+
         time_str = fixture.get("time", "")
-        combined_datetime = f"{date_str}T{time_str}:00" if date_str and time_str else ""
-        
-        # Parse the combined datetime
-        fixture_date = parse_date(combined_datetime)
+        normalized_time = str(time_str or "").strip()
+        time_confirmed = normalized_time.lower() not in TBC_TIME_VALUES
+        if time_confirmed:
+            combined_datetime = f"{date_str}T{normalized_time}:00"
+            fixture_date = parse_date(combined_datetime)
+            if fixture_date is None:
+                raise FixtureDataError(
+                    f"Upcoming match {fixture.get('id', '<unknown>')} has an "
+                    "unparseable kick-off time"
+                )
+        else:
+            fixture_date = match_date
+            logger.warning(
+                f"Match {fixture.get('id', '<unknown>')} has no confirmed kick-off "
+                "time; publishing a tentative date-only event"
+            )
+
+        home_team = fixture.get("home-team")
+        away_team = fixture.get("away-team")
+        if not isinstance(home_team, dict) or not isinstance(away_team, dict):
+            raise FixtureDataError(
+                f"Match {fixture.get('id', '<unknown>')} has malformed team data"
+            )
+        home_is_larkhall = str(home_team.get("id")) == str(TEAM_ID)
+        away_is_larkhall = str(away_team.get("id")) == str(TEAM_ID)
+        if home_is_larkhall == away_is_larkhall:
+            raise FixtureDataError(
+                f"Match {fixture.get('id', '<unknown>')} must contain exactly one "
+                "Larkhall Athletic side"
+            )
+
+        opponent = away_team if home_is_larkhall else home_team
+        if not opponent.get("id") or not str(opponent.get("name", "")).strip():
+            raise FixtureDataError(
+                f"Match {fixture.get('id', '<unknown>')} has no identifiable opponent"
+            )
         
         # Skip past fixtures
-        if fixture_date and fixture_date < datetime.now(pytz.utc):
+        if time_confirmed and fixture_date < reference_time:
             continue
             
         # Get status from the status object
         status_obj = fixture.get("status", {})
-        status = status_obj.get("full", "scheduled")
+        status = (
+            status_obj.get("full", "scheduled")
+            if time_confirmed
+            else "tentative"
+        )
         
         # Get competition name
         competition_obj = fixture.get("competition", {})
@@ -168,10 +261,18 @@ def process_fixtures(data: Dict[str, Any]) -> List[Dict[str, Any]]:
             "competition": competition,
             "is_home": is_home_fixture(fixture),
             "opponent": get_opponent_name(fixture),
-            "venue": fixture.get("venue", "")
+            "venue": fixture.get("venue", ""),
+            "time_confirmed": time_confirmed,
         }
         fixtures.append(processed)
-    
+
+    if not fixtures:
+        logger.info(
+            "No upcoming matches remain in the current fixture list; "
+            "existing calendar preserved"
+        )
+        return []
+
     logger.info(f"Processed {len(fixtures)} upcoming fixtures")
     return fixtures
 
@@ -248,8 +349,11 @@ def get_opponent_name(fixture: Dict[str, Any]) -> str:
         opponent_id = fixture.get("home-team", {}).get("id")
         opponent_name = fixture.get("home-team", {}).get("name")
     
+    if not opponent_id or not opponent_name:
+        raise FixtureDataError("Cannot publish a fixture without an identifiable opponent")
+
     # Use the team info mapping if available, otherwise use the name from the API
-    return TEAM_INFO.get(opponent_id, opponent_name or "Unknown Opponent")
+    return TEAM_INFO.get(opponent_id, opponent_name)
 
 
 def get_venue(fixture: Dict[str, Any]) -> str:
@@ -289,6 +393,9 @@ def create_calendar(fixtures: List[Dict[str, Any]]) -> Calendar:
     Returns:
         Calendar: The iCalendar object
     """
+    if not fixtures:
+        raise FixtureDataError("Refusing to create an empty fixtures calendar")
+
     cal = Calendar()
     
     # Set calendar properties
@@ -344,7 +451,10 @@ def create_event(fixture: Dict[str, Any]) -> Optional[Event]:
     # Set event properties
     event.add("summary", summary)
     event.add("dtstart", fixture["date"])
-    event.add("dtend", fixture["date"] + MATCH_DURATION)
+    if isinstance(fixture["date"], datetime):
+        event.add("dtend", fixture["date"] + MATCH_DURATION)
+    else:
+        event.add("dtend", fixture["date"] + timedelta(days=1))
     event.add("dtstamp", datetime.now(pytz.utc))
     
     # Create a unique ID for the event
@@ -360,6 +470,8 @@ def create_event(fixture: Dict[str, Any]) -> Optional[Event]:
         description += f"Larkhall Athletic and {fixture['opponent']}"
     else:
         description += f"{fixture['opponent']} and Larkhall Athletic"
+    if not fixture.get("time_confirmed", True):
+        description += ". Kick-off time to be confirmed"
     event.add("description", description)
     
     # Set status
@@ -375,7 +487,52 @@ def create_event(fixture: Dict[str, Any]) -> Optional[Event]:
     return event
 
 
-def write_calendar(cal: Calendar, filename: str) -> None:
+def _inspect_existing_events(filename: str, now: datetime) -> tuple[int, int]:
+    """Return total and still-future event counts from the existing calendar."""
+    if not os.path.exists(filename):
+        return 0, 0
+
+    try:
+        with open(filename, "rb") as existing_file:
+            existing_calendar = Calendar.from_ical(existing_file.read())
+    except Exception as error:
+        logger.warning(f"Could not inspect existing calendar baseline: {error}")
+        return 0, 0
+
+    reference_time = now
+    if reference_time.tzinfo is None:
+        reference_time = pytz.utc.localize(reference_time)
+    reference_date = reference_time.astimezone(UK_TIMEZONE).date()
+    total_events = 0
+    future_events = 0
+
+    for component in existing_calendar.walk():
+        if component.name != "VEVENT":
+            continue
+        if "dtstart" not in component:
+            continue
+        try:
+            event_start = component.decoded("dtstart")
+        except Exception as error:
+            logger.warning(f"Could not inspect existing event start: {error}")
+            continue
+        total_events += 1
+        if isinstance(event_start, datetime):
+            if event_start.tzinfo is None:
+                event_start = UK_TIMEZONE.localize(event_start)
+            if event_start >= reference_time:
+                future_events += 1
+        elif isinstance(event_start, date) and event_start >= reference_date:
+            future_events += 1
+
+    return total_events, future_events
+
+
+def write_calendar(
+    cal: Calendar,
+    filename: str,
+    now: Optional[datetime] = None,
+) -> None:
     """
     Write the calendar to a file.
     
@@ -383,8 +540,53 @@ def write_calendar(cal: Calendar, filename: str) -> None:
         cal: The calendar object
         filename: The output filename
     """
-    with open(filename, "wb") as f:
-        f.write(cal.to_ical())
+    calendar_bytes = cal.to_ical()
+    parsed_calendar = Calendar.from_ical(calendar_bytes)
+    event_count = sum(
+        1 for component in parsed_calendar.walk() if component.name == "VEVENT"
+    )
+    if event_count == 0:
+        raise FixtureDataError("Refusing to replace the calendar with zero events")
+
+    output_path = os.path.abspath(filename)
+    reference_time = now or datetime.now(pytz.utc)
+    _, existing_future_events = _inspect_existing_events(
+        output_path,
+        reference_time,
+    )
+    if (
+        existing_future_events == 0
+        and event_count < BOOTSTRAP_MIN_UPCOMING_EVENTS
+    ):
+        raise FixtureDataError(
+            f"Refusing bootstrap calendar with {event_count} events; at least "
+            f"{BOOTSTRAP_MIN_UPCOMING_EVENTS} are required without a future baseline"
+        )
+    if (
+        existing_future_events > 0
+        and event_count < existing_future_events * MIN_RETAINED_FUTURE_RATIO
+    ):
+        raise FixtureDataError(
+            f"Refusing material truncation to {event_count} events; existing calendar "
+            f"still has {existing_future_events} future events"
+        )
+
+    output_directory = os.path.dirname(output_path)
+    temp_fd, temp_path = tempfile.mkstemp(
+        dir=output_directory,
+        prefix=f".{os.path.basename(filename)}.",
+        suffix=".tmp",
+    )
+    try:
+        with os.fdopen(temp_fd, "wb") as f:
+            f.write(calendar_bytes)
+        if not validate_ics_file(temp_path):
+            raise FixtureDataError("Generated calendar failed full validation")
+        os.replace(temp_path, output_path)
+    except Exception:
+        if os.path.exists(temp_path):
+            os.unlink(temp_path)
+        raise
     logger.info(f"Calendar written to {filename}")
 
 
@@ -399,6 +601,22 @@ def main() -> None:
         
         # Process fixtures
         fixtures = process_fixtures(data)
+
+        if not fixtures:
+            fixture_results = data.get("fixtures-results", {})
+            raw_fixtures = fixture_results.get("matches", [])
+            if not raw_fixtures:
+                total_events, future_events = _inspect_existing_events(
+                    os.path.abspath(OUTPUT_FILE),
+                    datetime.now(pytz.utc),
+                )
+                if total_events == 0 or future_events > 0:
+                    raise FixtureDataError(
+                        "Empty source is safe only when the existing non-empty "
+                        "calendar is entirely past"
+                    )
+            logger.info("Calendar update completed as a no-op")
+            return
         
         # Create calendar
         cal = create_calendar(fixtures)

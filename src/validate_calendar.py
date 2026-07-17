@@ -82,8 +82,8 @@ def validate_ics_file(file_path):
             print("VALIDATION SUCCESSFUL: Calendar is valid")
             return True
         elif event_count == 0:
-            print("WARNING: Calendar contains no events")
-            return True  # Still valid, just empty
+            print("VALIDATION FAILED: Calendar contains no events")
+            return False
         else:
             print(f"VALIDATION FAILED: {event_count - valid_events} invalid events")
             return False
