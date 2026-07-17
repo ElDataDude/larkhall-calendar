@@ -7,6 +7,7 @@ from pathlib import Path
 from unittest import mock
 
 import pytz
+import requests
 from icalendar import Calendar, Event
 
 from src import update_calendar
@@ -28,6 +29,25 @@ class UpdateCalendarTests(unittest.TestCase):
             now=REFERENCE_TIME,
         )
 
+    def _mock_api_response(
+        self,
+        *,
+        status=200,
+        content=b"{}",
+        content_type="application/json",
+    ):
+        response = mock.Mock()
+        response.status_code = status
+        response.content = content
+        response.headers = (
+            {"Content-Type": content_type}
+            if content_type is not None
+            else {}
+        )
+        response.history = []
+        response.json.return_value = self.api_response
+        return response
+
     def test_fixture_labels_authoritative_schedule_and_synthetic_api_schema(self):
         metadata = self.api_response["_fixture-metadata"]
 
@@ -43,8 +63,7 @@ class UpdateCalendarTests(unittest.TestCase):
         )
 
     def test_fetch_uses_team_1169_without_a_guessed_season(self):
-        response = mock.Mock()
-        response.json.return_value = self.api_response
+        response = self._mock_api_response()
 
         with mock.patch.object(
             update_calendar.requests, "get", return_value=response
@@ -54,11 +73,282 @@ class UpdateCalendarTests(unittest.TestCase):
         self.assertEqual(result, self.api_response)
         request_get.assert_called_once_with(
             update_calendar.API_ENDPOINT,
-            headers={"FWP-API-Key": "test-key"},
+            headers={
+                "FWP-API-Key": "test-key",
+                "Accept": "application/json",
+                "User-Agent": update_calendar.API_USER_AGENT,
+            },
             params={"team": 1169},
             timeout=update_calendar.REQUEST_TIMEOUT_SECONDS,
         )
-        response.raise_for_status.assert_called_once_with()
+
+    def test_fetch_retries_transient_non_json_body_then_succeeds(self):
+        body_marker = b"<html>DO_NOT_LOG_TRANSIENT_BODY</html>"
+        invalid_response = self._mock_api_response(
+            content=body_marker,
+            content_type="text/html",
+        )
+        invalid_response.json.side_effect = requests.exceptions.JSONDecodeError(
+            "Expecting value",
+            body_marker.decode("ascii"),
+            0,
+        )
+        valid_response = self._mock_api_response()
+
+        with (
+            mock.patch.object(
+                update_calendar.requests,
+                "get",
+                side_effect=[invalid_response, valid_response],
+            ) as request_get,
+            mock.patch.object(update_calendar.time, "sleep") as sleep,
+            self.assertLogs("calendar_updater", level="WARNING") as logs,
+        ):
+            result = update_calendar.fetch_fixtures("DO_NOT_LOG_API_KEY")
+
+        self.assertEqual(result, self.api_response)
+        self.assertEqual(request_get.call_count, 2)
+        sleep.assert_called_once_with(1)
+        self.assertEqual(invalid_response.json.call_count, 1)
+        self.assertEqual(valid_response.json.call_count, 1)
+        rendered_logs = "\n".join(logs.output)
+        self.assertIn("reason=invalid_json", rendered_logs)
+        self.assertIn("status=200", rendered_logs)
+        self.assertIn("content_type=text/html", rendered_logs)
+        self.assertIn(f"body_bytes={len(body_marker)}", rendered_logs)
+        self.assertNotIn("DO_NOT_LOG_TRANSIENT_BODY", rendered_logs)
+        self.assertNotIn("DO_NOT_LOG_API_KEY", rendered_logs)
+
+    def test_fetch_accepts_valid_json_when_content_type_is_mislabelled(self):
+        response = self._mock_api_response(
+            content=b'{"fixtures-results": {"matches": []}}',
+            content_type="text/plain",
+        )
+
+        with (
+            mock.patch.object(
+                update_calendar.requests,
+                "get",
+                return_value=response,
+            ) as request_get,
+            mock.patch.object(update_calendar.time, "sleep") as sleep,
+        ):
+            result = update_calendar.fetch_fixtures("test-key")
+
+        self.assertEqual(result, self.api_response)
+        request_get.assert_called_once()
+        sleep.assert_not_called()
+        response.json.assert_called_once_with()
+
+    def test_fetch_exhausts_non_json_retries_without_leaking_content(self):
+        body_marker = b"DO_NOT_LOG_EXHAUSTED_BODY"
+        response = self._mock_api_response(
+            content=body_marker,
+            content_type="text/html; boundary=DO_NOT_LOG_HEADER_PARAMETER",
+        )
+        response.json.side_effect = requests.exceptions.JSONDecodeError(
+            "Expecting value",
+            body_marker.decode("ascii"),
+            0,
+        )
+
+        with (
+            mock.patch.object(
+                update_calendar.requests,
+                "get",
+                return_value=response,
+            ) as request_get,
+            mock.patch.object(update_calendar.time, "sleep") as sleep,
+            self.assertLogs("calendar_updater", level="WARNING") as logs,
+            self.assertRaises(update_calendar.FixtureDataError) as error,
+        ):
+            update_calendar.fetch_fixtures("DO_NOT_LOG_API_KEY")
+
+        self.assertEqual(request_get.call_count, 3)
+        self.assertEqual(response.json.call_count, 3)
+        self.assertEqual(sleep.call_args_list, [mock.call(1), mock.call(2)])
+        rendered_output = "\n".join([*logs.output, str(error.exception)])
+        self.assertIn("reason=invalid_json", rendered_output)
+        self.assertIn("content_type=text/html", rendered_output)
+        self.assertNotIn("DO_NOT_LOG_EXHAUSTED_BODY", rendered_output)
+        self.assertNotIn("DO_NOT_LOG_HEADER_PARAMETER", rendered_output)
+        self.assertNotIn("DO_NOT_LOG_API_KEY", rendered_output)
+
+    def test_fetch_does_not_retry_client_auth_error(self):
+        response = self._mock_api_response(
+            status=403,
+            content=b"DO_NOT_LOG_CLIENT_ERROR_BODY",
+            content_type="text/html",
+        )
+
+        with (
+            mock.patch.object(
+                update_calendar.requests,
+                "get",
+                return_value=response,
+            ) as request_get,
+            mock.patch.object(update_calendar.time, "sleep") as sleep,
+            self.assertLogs("calendar_updater", level="WARNING") as logs,
+            self.assertRaisesRegex(
+                update_calendar.FixtureDataError,
+                "status=403",
+            ),
+        ):
+            update_calendar.fetch_fixtures("DO_NOT_LOG_API_KEY")
+
+        request_get.assert_called_once()
+        sleep.assert_not_called()
+        response.json.assert_not_called()
+        rendered_logs = "\n".join(logs.output)
+        self.assertIn("reason=client_status", rendered_logs)
+        self.assertNotIn("DO_NOT_LOG_CLIENT_ERROR_BODY", rendered_logs)
+        self.assertNotIn("DO_NOT_LOG_API_KEY", rendered_logs)
+
+    def test_fetch_retries_empty_success_response_then_fails_closed(self):
+        response = self._mock_api_response(
+            status=204,
+            content=b"",
+            content_type=None,
+        )
+
+        with (
+            mock.patch.object(
+                update_calendar.requests,
+                "get",
+                return_value=response,
+            ) as request_get,
+            mock.patch.object(update_calendar.time, "sleep") as sleep,
+            self.assertRaisesRegex(
+                update_calendar.FixtureDataError,
+                "reason=empty_body status=204",
+            ),
+        ):
+            update_calendar.fetch_fixtures("test-key")
+
+        self.assertEqual(request_get.call_count, 3)
+        self.assertEqual(sleep.call_args_list, [mock.call(1), mock.call(2)])
+        response.json.assert_not_called()
+
+    def test_fetch_retries_retryable_status_then_succeeds(self):
+        retryable_response = self._mock_api_response(
+            status=503,
+            content=b"temporarily unavailable",
+            content_type="text/plain",
+        )
+        valid_response = self._mock_api_response()
+
+        with (
+            mock.patch.object(
+                update_calendar.requests,
+                "get",
+                side_effect=[retryable_response, valid_response],
+            ) as request_get,
+            mock.patch.object(update_calendar.time, "sleep") as sleep,
+        ):
+            result = update_calendar.fetch_fixtures("test-key")
+
+        self.assertEqual(result, self.api_response)
+        self.assertEqual(request_get.call_count, 2)
+        sleep.assert_called_once_with(1)
+        retryable_response.json.assert_not_called()
+
+    def test_fetch_uses_numeric_retry_after_for_rate_limit(self):
+        rate_limited_response = self._mock_api_response(
+            status=429,
+            content=b"rate limited",
+            content_type="text/plain",
+        )
+        rate_limited_response.headers["Retry-After"] = "60"
+        valid_response = self._mock_api_response()
+
+        with (
+            mock.patch.object(
+                update_calendar.requests,
+                "get",
+                side_effect=[rate_limited_response, valid_response],
+            ) as request_get,
+            mock.patch.object(update_calendar.time, "sleep") as sleep,
+        ):
+            result = update_calendar.fetch_fixtures("test-key")
+
+        self.assertEqual(result, self.api_response)
+        self.assertEqual(request_get.call_count, 2)
+        sleep.assert_called_once_with(60)
+        rate_limited_response.json.assert_not_called()
+
+    def test_fetch_bounds_or_defaults_invalid_retry_after(self):
+        cases = [
+            ("0", 1),
+            ("61", 60),
+            ("not-a-number", 60),
+            ("DO_NOT_LOG_RETRY_AFTER", 60),
+            (None, 60),
+        ]
+
+        for retry_after, expected_delay in cases:
+            with self.subTest(
+                retry_after=retry_after,
+                expected_delay=expected_delay,
+            ):
+                rate_limited_response = self._mock_api_response(
+                    status=429,
+                    content=b"rate limited",
+                    content_type="text/plain",
+                )
+                if retry_after is not None:
+                    rate_limited_response.headers["Retry-After"] = retry_after
+                valid_response = self._mock_api_response()
+
+                with (
+                    mock.patch.object(
+                        update_calendar.requests,
+                        "get",
+                        side_effect=[rate_limited_response, valid_response],
+                    ) as request_get,
+                    mock.patch.object(update_calendar.time, "sleep") as sleep,
+                    self.assertLogs(
+                        "calendar_updater",
+                        level="WARNING",
+                    ) as logs,
+                ):
+                    result = update_calendar.fetch_fixtures("test-key")
+
+                self.assertEqual(result, self.api_response)
+                self.assertEqual(request_get.call_count, 2)
+                sleep.assert_called_once_with(expected_delay)
+                rate_limited_response.json.assert_not_called()
+                self.assertNotIn(
+                    "DO_NOT_LOG_RETRY_AFTER",
+                    "\n".join(logs.output),
+                )
+
+    def test_fetch_retries_timeout_and_connection_error_without_logging_details(self):
+        for request_error, expected_reason in [
+            (requests.Timeout("DO_NOT_LOG_TIMEOUT_DETAIL"), "timeout"),
+            (
+                requests.ConnectionError("DO_NOT_LOG_CONNECTION_DETAIL"),
+                "connection_error",
+            ),
+        ]:
+            with self.subTest(expected_reason=expected_reason):
+                valid_response = self._mock_api_response()
+                with (
+                    mock.patch.object(
+                        update_calendar.requests,
+                        "get",
+                        side_effect=[request_error, valid_response],
+                    ) as request_get,
+                    mock.patch.object(update_calendar.time, "sleep") as sleep,
+                    self.assertLogs("calendar_updater", level="WARNING") as logs,
+                ):
+                    result = update_calendar.fetch_fixtures("DO_NOT_LOG_API_KEY")
+
+                self.assertEqual(result, self.api_response)
+                self.assertEqual(request_get.call_count, 2)
+                sleep.assert_called_once_with(1)
+                rendered_logs = "\n".join(logs.output)
+                self.assertIn(f"reason={expected_reason}", rendered_logs)
+                self.assertNotIn("DO_NOT_LOG", rendered_logs)
 
     def test_full_2026_27_schedule_new_opponents_and_uk_timezone_generate_events(self):
         fixtures = self._process_full_schedule()

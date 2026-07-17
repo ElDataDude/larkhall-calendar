@@ -24,6 +24,7 @@ import sys
 import json
 import logging
 import tempfile
+import time
 from datetime import date, datetime, timedelta
 from typing import Dict, List, Any, Optional
 import requests
@@ -56,6 +57,18 @@ CALENDAR_DESCRIPTION = "Official fixtures calendar for Larkhall Athletic Footbal
 HOME_VENUE = "Plain Ham, Bath"  # Default venue for home matches
 MATCH_DURATION = timedelta(hours=1, minutes=45)  # Typical football match duration
 REQUEST_TIMEOUT_SECONDS = 30
+MAX_FETCH_ATTEMPTS = 3
+RETRY_BACKOFF_SECONDS = (1, 2)
+API_USER_AGENT = (
+    "larkhall-calendar/1.0 "
+    "(+https://github.com/ElDataDude/larkhall-calendar)"
+)
+CONTENT_TYPE_LOG_LIMIT = 80
+CONTENT_TYPE_LOG_CHARS = frozenset(
+    "abcdefghijklmnopqrstuvwxyz0123456789!#$&^_.+-/"
+)
+DEFAULT_RETRY_AFTER_SECONDS = 60
+MAX_RETRY_AFTER_SECONDS = 60
 UK_TIMEZONE = pytz.timezone("Europe/London")
 # With no future last-known-good baseline, reject implausibly small season bootstraps.
 BOOTSTRAP_MIN_UPCOMING_EVENTS = 10
@@ -66,6 +79,81 @@ TBC_TIME_VALUES = {"", "tbc", "tbd", "to be confirmed"}
 
 class FixtureDataError(ValueError):
     """Raised when upstream data is unsafe to publish as a calendar."""
+
+
+def _sanitized_content_type(response: requests.Response) -> str:
+    """Return a bounded media type suitable for credential-safe logging."""
+    raw_content_type = response.headers.get("Content-Type", "") or ""
+    media_type = str(raw_content_type).split(";", 1)[0].strip().lower()
+    if not media_type:
+        return "<missing>"
+
+    bounded_media_type = media_type[:CONTENT_TYPE_LOG_LIMIT]
+    return "".join(
+        character if character in CONTENT_TYPE_LOG_CHARS else "?"
+        for character in bounded_media_type
+    )
+
+
+def _log_response_diagnostic(
+    response: requests.Response,
+    attempt: int,
+    reason: str,
+) -> None:
+    """Log safe metadata without body content, full headers, or request secrets."""
+    body_length = len(response.content or b"")
+    redirect_count = len(response.history or [])
+    logger.warning(
+        "Football Web Pages response rejected: reason=%s attempt=%d/%d "
+        "status=%d content_type=%s body_bytes=%d redirects=%d",
+        reason,
+        attempt,
+        MAX_FETCH_ATTEMPTS,
+        response.status_code,
+        _sanitized_content_type(response),
+        body_length,
+        redirect_count,
+    )
+
+
+def _retry_after_seconds(response: requests.Response) -> int:
+    """Return a bounded numeric Retry-After delay without logging the header."""
+    raw_retry_after = response.headers.get("Retry-After")
+    if raw_retry_after is None:
+        return DEFAULT_RETRY_AFTER_SECONDS
+
+    retry_after = str(raw_retry_after).strip()
+    if not retry_after.isascii() or not retry_after.isdigit():
+        return DEFAULT_RETRY_AFTER_SECONDS
+
+    try:
+        delay = int(retry_after)
+    except ValueError:
+        return DEFAULT_RETRY_AFTER_SECONDS
+    return min(max(delay, 1), MAX_RETRY_AFTER_SECONDS)
+
+
+def _retry_or_raise(
+    attempt: int,
+    reason: str,
+    status: Optional[int],
+    delay_seconds: Optional[int] = None,
+) -> None:
+    """Apply the bounded retry schedule or fail with secret-free context."""
+    if attempt >= MAX_FETCH_ATTEMPTS:
+        status_value = status if status is not None else "unavailable"
+        raise FixtureDataError(
+            "Football Web Pages request failed after "
+            f"{MAX_FETCH_ATTEMPTS} attempts: reason={reason} "
+            f"status={status_value}"
+        ) from None
+
+    delay = (
+        delay_seconds
+        if delay_seconds is not None
+        else RETRY_BACKOFF_SECONDS[attempt - 1]
+    )
+    time.sleep(delay)
 
 
 # Team information mapping (ID to name)
@@ -124,31 +212,100 @@ def fetch_fixtures(api_key: str) -> Dict[str, Any]:
         Dict[str, Any]: The JSON response from the API
 
     Raises:
-        requests.RequestException: If the API request fails
+        FixtureDataError: If the API response is unsafe to process
     """
     headers = {
-        "FWP-API-Key": api_key
+        "FWP-API-Key": api_key,
+        "Accept": "application/json",
+        "User-Agent": API_USER_AGENT,
     }
     params = {
         "team": TEAM_ID
     }
 
-    try:
-        logger.info(f"Fetching fixtures for team ID {TEAM_ID}")
-        response = requests.get(
-            API_ENDPOINT,
-            headers=headers,
-            params=params,
-            timeout=REQUEST_TIMEOUT_SECONDS,
-        )
-        response.raise_for_status()
-        data = response.json()
+    logger.info(f"Fetching fixtures for team ID {TEAM_ID}")
+    for attempt in range(1, MAX_FETCH_ATTEMPTS + 1):
+        try:
+            response = requests.get(
+                API_ENDPOINT,
+                headers=headers,
+                params=params,
+                timeout=REQUEST_TIMEOUT_SECONDS,
+            )
+        except (requests.Timeout, requests.ConnectionError) as error:
+            reason = (
+                "timeout"
+                if isinstance(error, requests.Timeout)
+                else "connection_error"
+            )
+            logger.warning(
+                "Football Web Pages request did not return a response: "
+                "reason=%s attempt=%d/%d status=unavailable "
+                "content_type=unavailable body_bytes=0 redirects=0",
+                reason,
+                attempt,
+                MAX_FETCH_ATTEMPTS,
+            )
+            _retry_or_raise(attempt, reason, None)
+            continue
+        except requests.RequestException:
+            logger.error(
+                "Football Web Pages request failed before a response: "
+                "reason=request_error attempt=%d/%d status=unavailable "
+                "content_type=unavailable body_bytes=0 redirects=0",
+                attempt,
+                MAX_FETCH_ATTEMPTS,
+            )
+            raise FixtureDataError(
+                "Football Web Pages request failed before a response"
+            ) from None
+
+        status = response.status_code
+        if status == 429:
+            _log_response_diagnostic(response, attempt, "rate_limited")
+            _retry_or_raise(
+                attempt,
+                "rate_limited",
+                status,
+                delay_seconds=_retry_after_seconds(response),
+            )
+            continue
+
+        retryable_status = status == 408 or 500 <= status < 600
+        if retryable_status:
+            _log_response_diagnostic(response, attempt, "retryable_status")
+            _retry_or_raise(attempt, "retryable_status", status)
+            continue
+
+        if 400 <= status < 500:
+            _log_response_diagnostic(response, attempt, "client_status")
+            raise FixtureDataError(
+                f"Football Web Pages request rejected with status={status}"
+            )
+
+        if not 200 <= status < 300:
+            _log_response_diagnostic(response, attempt, "unexpected_status")
+            raise FixtureDataError(
+                f"Football Web Pages returned unexpected status={status}"
+            )
+
+        if not response.content:
+            _log_response_diagnostic(response, attempt, "empty_body")
+            _retry_or_raise(attempt, "empty_body", status)
+            continue
+
+        try:
+            data = response.json()
+        except requests.exceptions.JSONDecodeError:
+            _log_response_diagnostic(response, attempt, "invalid_json")
+            _retry_or_raise(attempt, "invalid_json", status)
+            continue
+
         if not isinstance(data, dict):
             raise FixtureDataError("Football Web Pages returned a non-object response")
         return data
-    except requests.RequestException as e:
-        logger.error(f"API request failed: {e}")
-        raise
+
+    raise AssertionError("Fixture fetch retry loop exited unexpectedly")
 
 
 def process_fixtures(
