@@ -1,0 +1,940 @@
+{
+  "_fixture-metadata": {
+    "schedule-source": "https://www.footballwebpages.co.uk/larkhall-athletic/fixtures-results captured 2026-07-17",
+    "schedule-authoritative": true,
+    "api-schema": "Synthetic Football Web Pages v2 shape; not a direct API capture",
+    "opponent-ids": "Synthetic test identifiers; match IDs, dates, times, sides and opponents come from the live schedule"
+  },
+  "fixtures-results": {
+    "team": {
+      "id": 1169,
+      "name": "Larkhall Athletic"
+    },
+    "matches": [
+      {
+        "id": 571319,
+        "date": "2026-08-08",
+        "time": "15:00",
+        "status": {
+          "full": "Fixture"
+        },
+        "competition": {
+          "id": "fa-cup",
+          "name": "FA Cup EP"
+        },
+        "home-team": {
+          "id": "test-kidlington",
+          "name": "Kidlington"
+        },
+        "away-team": {
+          "id": 1169,
+          "name": "Larkhall Athletic"
+        },
+        "venue": ""
+      },
+      {
+        "id": 583212,
+        "date": "2026-08-12",
+        "time": "19:45",
+        "status": {
+          "full": "Fixture"
+        },
+        "competition": {
+          "id": "southern-league-south",
+          "name": "Southern League - South Division"
+        },
+        "home-team": {
+          "id": 1169,
+          "name": "Larkhall Athletic"
+        },
+        "away-team": {
+          "id": "test-weymouth",
+          "name": "Weymouth"
+        },
+        "venue": "Plain Ham"
+      },
+      {
+        "id": 583256,
+        "date": "2026-08-15",
+        "time": "15:00",
+        "status": {
+          "full": "Fixture"
+        },
+        "competition": {
+          "id": "southern-league-south",
+          "name": "Southern League - South Division"
+        },
+        "home-team": {
+          "id": "test-worcester-raiders",
+          "name": "Worcester Raiders"
+        },
+        "away-team": {
+          "id": 1169,
+          "name": "Larkhall Athletic"
+        },
+        "venue": ""
+      },
+      {
+        "id": 571771,
+        "date": "2026-08-29",
+        "time": "15:00",
+        "status": {
+          "full": "Fixture"
+        },
+        "competition": {
+          "id": "fa-trophy",
+          "name": "FA Trophy 1Q"
+        },
+        "home-team": {
+          "id": 1169,
+          "name": "Larkhall Athletic"
+        },
+        "away-team": {
+          "id": "test-dorchester-town",
+          "name": "Dorchester Town"
+        },
+        "venue": "Plain Ham"
+      },
+      {
+        "id": 583339,
+        "date": "2026-08-31",
+        "time": "15:00",
+        "status": {
+          "full": "Fixture"
+        },
+        "competition": {
+          "id": "southern-league-south",
+          "name": "Southern League - South Division"
+        },
+        "home-team": {
+          "id": 1169,
+          "name": "Larkhall Athletic"
+        },
+        "away-team": {
+          "id": "test-westbury-united",
+          "name": "Westbury United"
+        },
+        "venue": "Plain Ham"
+      },
+      {
+        "id": 583359,
+        "date": "2026-09-05",
+        "time": "15:00",
+        "status": {
+          "full": "Fixture"
+        },
+        "competition": {
+          "id": "southern-league-south",
+          "name": "Southern League - South Division"
+        },
+        "home-team": {
+          "id": "test-willand-rovers",
+          "name": "Willand Rovers"
+        },
+        "away-team": {
+          "id": 1169,
+          "name": "Larkhall Athletic"
+        },
+        "venue": ""
+      },
+      {
+        "id": 583402,
+        "date": "2026-09-16",
+        "time": "19:45",
+        "status": {
+          "full": "Fixture"
+        },
+        "competition": {
+          "id": "southern-league-south",
+          "name": "Southern League - South Division"
+        },
+        "home-team": {
+          "id": 1169,
+          "name": "Larkhall Athletic"
+        },
+        "away-team": {
+          "id": "test-hungerford-town",
+          "name": "Hungerford Town"
+        },
+        "venue": "Plain Ham"
+      },
+      {
+        "id": 583422,
+        "date": "2026-09-19",
+        "time": "15:00",
+        "status": {
+          "full": "Fixture"
+        },
+        "competition": {
+          "id": "southern-league-south",
+          "name": "Southern League - South Division"
+        },
+        "home-team": {
+          "id": "test-portland-united",
+          "name": "Portland United"
+        },
+        "away-team": {
+          "id": 1169,
+          "name": "Larkhall Athletic"
+        },
+        "venue": ""
+      },
+      {
+        "id": 583464,
+        "date": "2026-09-26",
+        "time": "15:00",
+        "status": {
+          "full": "Fixture"
+        },
+        "competition": {
+          "id": "southern-league-south",
+          "name": "Southern League - South Division"
+        },
+        "home-team": {
+          "id": 1169,
+          "name": "Larkhall Athletic"
+        },
+        "away-team": {
+          "id": "test-shaftesbury",
+          "name": "Shaftesbury"
+        },
+        "venue": "Plain Ham"
+      },
+      {
+        "id": 583514,
+        "date": "2026-09-30",
+        "time": "19:45",
+        "status": {
+          "full": "Fixture"
+        },
+        "competition": {
+          "id": "southern-league-south",
+          "name": "Southern League - South Division"
+        },
+        "home-team": {
+          "id": "test-slimbridge",
+          "name": "Slimbridge"
+        },
+        "away-team": {
+          "id": 1169,
+          "name": "Larkhall Athletic"
+        },
+        "venue": ""
+      },
+      {
+        "id": 583550,
+        "date": "2026-10-03",
+        "time": "15:00",
+        "status": {
+          "full": "Fixture"
+        },
+        "competition": {
+          "id": "southern-league-south",
+          "name": "Southern League - South Division"
+        },
+        "home-team": {
+          "id": "test-falmouth-town",
+          "name": "Falmouth Town"
+        },
+        "away-team": {
+          "id": 1169,
+          "name": "Larkhall Athletic"
+        },
+        "venue": ""
+      },
+      {
+        "id": 583597,
+        "date": "2026-10-10",
+        "time": "15:00",
+        "status": {
+          "full": "Fixture"
+        },
+        "competition": {
+          "id": "southern-league-south",
+          "name": "Southern League - South Division"
+        },
+        "home-team": {
+          "id": 1169,
+          "name": "Larkhall Athletic"
+        },
+        "away-team": {
+          "id": "test-bishops-cleeve",
+          "name": "Bishops Cleeve"
+        },
+        "venue": "Plain Ham"
+      },
+      {
+        "id": 583645,
+        "date": "2026-10-14",
+        "time": "19:45",
+        "status": {
+          "full": "Fixture"
+        },
+        "competition": {
+          "id": "southern-league-south",
+          "name": "Southern League - South Division"
+        },
+        "home-team": {
+          "id": 1169,
+          "name": "Larkhall Athletic"
+        },
+        "away-team": {
+          "id": "test-swindon-supermarine",
+          "name": "Swindon Supermarine"
+        },
+        "venue": "Plain Ham"
+      },
+      {
+        "id": 583684,
+        "date": "2026-10-17",
+        "time": "15:00",
+        "status": {
+          "full": "Fixture"
+        },
+        "competition": {
+          "id": "southern-league-south",
+          "name": "Southern League - South Division"
+        },
+        "home-team": {
+          "id": "test-melksham-town",
+          "name": "Melksham Town"
+        },
+        "away-team": {
+          "id": 1169,
+          "name": "Larkhall Athletic"
+        },
+        "venue": ""
+      },
+      {
+        "id": 583727,
+        "date": "2026-10-20",
+        "time": "19:45",
+        "status": {
+          "full": "Fixture"
+        },
+        "competition": {
+          "id": "southern-league-south",
+          "name": "Southern League - South Division"
+        },
+        "home-team": {
+          "id": "test-sporting-club-inkberrow",
+          "name": "Sporting Club Inkberrow"
+        },
+        "away-team": {
+          "id": 1169,
+          "name": "Larkhall Athletic"
+        },
+        "venue": ""
+      },
+      {
+        "id": 583751,
+        "date": "2026-10-24",
+        "time": "15:00",
+        "status": {
+          "full": "Fixture"
+        },
+        "competition": {
+          "id": "southern-league-south",
+          "name": "Southern League - South Division"
+        },
+        "home-team": {
+          "id": 1169,
+          "name": "Larkhall Athletic"
+        },
+        "away-team": {
+          "id": "test-tiverton-town",
+          "name": "Tiverton Town"
+        },
+        "venue": "Plain Ham"
+      },
+      {
+        "id": 583791,
+        "date": "2026-10-27",
+        "time": "19:45",
+        "status": {
+          "full": "Fixture"
+        },
+        "competition": {
+          "id": "southern-league-south",
+          "name": "Southern League - South Division"
+        },
+        "home-team": {
+          "id": "test-hungerford-town",
+          "name": "Hungerford Town"
+        },
+        "away-team": {
+          "id": 1169,
+          "name": "Larkhall Athletic"
+        },
+        "venue": ""
+      },
+      {
+        "id": 583838,
+        "date": "2026-10-31",
+        "time": "15:00",
+        "status": {
+          "full": "Fixture"
+        },
+        "competition": {
+          "id": "southern-league-south",
+          "name": "Southern League - South Division"
+        },
+        "home-team": {
+          "id": 1169,
+          "name": "Larkhall Athletic"
+        },
+        "away-team": {
+          "id": "test-bristol-manor-farm",
+          "name": "Bristol Manor Farm"
+        },
+        "venue": "Plain Ham"
+      },
+      {
+        "id": 583878,
+        "date": "2026-11-07",
+        "time": "15:00",
+        "status": {
+          "full": "Fixture"
+        },
+        "competition": {
+          "id": "southern-league-south",
+          "name": "Southern League - South Division"
+        },
+        "home-team": {
+          "id": "test-bideford",
+          "name": "Bideford"
+        },
+        "away-team": {
+          "id": 1169,
+          "name": "Larkhall Athletic"
+        },
+        "venue": ""
+      },
+      {
+        "id": 583930,
+        "date": "2026-11-11",
+        "time": "19:45",
+        "status": {
+          "full": "Fixture"
+        },
+        "competition": {
+          "id": "southern-league-south",
+          "name": "Southern League - South Division"
+        },
+        "home-team": {
+          "id": 1169,
+          "name": "Larkhall Athletic"
+        },
+        "away-team": {
+          "id": "test-slimbridge",
+          "name": "Slimbridge"
+        },
+        "venue": "Plain Ham"
+      },
+      {
+        "id": 583967,
+        "date": "2026-11-14",
+        "time": "15:00",
+        "status": {
+          "full": "Fixture"
+        },
+        "competition": {
+          "id": "southern-league-south",
+          "name": "Southern League - South Division"
+        },
+        "home-team": {
+          "id": "test-dorchester-town",
+          "name": "Dorchester Town"
+        },
+        "away-team": {
+          "id": 1169,
+          "name": "Larkhall Athletic"
+        },
+        "venue": ""
+      },
+      {
+        "id": 584013,
+        "date": "2026-11-21",
+        "time": "15:00",
+        "status": {
+          "full": "Fixture"
+        },
+        "competition": {
+          "id": "southern-league-south",
+          "name": "Southern League - South Division"
+        },
+        "home-team": {
+          "id": 1169,
+          "name": "Larkhall Athletic"
+        },
+        "away-team": {
+          "id": "test-hartpury",
+          "name": "Hartpury"
+        },
+        "venue": "Plain Ham"
+      },
+      {
+        "id": 584058,
+        "date": "2026-11-28",
+        "time": "15:00",
+        "status": {
+          "full": "Fixture"
+        },
+        "competition": {
+          "id": "southern-league-south",
+          "name": "Southern League - South Division"
+        },
+        "home-team": {
+          "id": 1169,
+          "name": "Larkhall Athletic"
+        },
+        "away-team": {
+          "id": "test-portland-united",
+          "name": "Portland United"
+        },
+        "venue": "Plain Ham"
+      },
+      {
+        "id": 584105,
+        "date": "2026-12-05",
+        "time": "15:00",
+        "status": {
+          "full": "Fixture"
+        },
+        "competition": {
+          "id": "southern-league-south",
+          "name": "Southern League - South Division"
+        },
+        "home-team": {
+          "id": "test-shaftesbury",
+          "name": "Shaftesbury"
+        },
+        "away-team": {
+          "id": 1169,
+          "name": "Larkhall Athletic"
+        },
+        "venue": ""
+      },
+      {
+        "id": 584147,
+        "date": "2026-12-12",
+        "time": "15:00",
+        "status": {
+          "full": "Fixture"
+        },
+        "competition": {
+          "id": "southern-league-south",
+          "name": "Southern League - South Division"
+        },
+        "home-team": {
+          "id": 1169,
+          "name": "Larkhall Athletic"
+        },
+        "away-team": {
+          "id": "test-barnstaple-town",
+          "name": "Barnstaple Town"
+        },
+        "venue": "Plain Ham"
+      },
+      {
+        "id": 584188,
+        "date": "2026-12-19",
+        "time": "15:00",
+        "status": {
+          "full": "Fixture"
+        },
+        "competition": {
+          "id": "southern-league-south",
+          "name": "Southern League - South Division"
+        },
+        "home-team": {
+          "id": "test-exmouth-town",
+          "name": "Exmouth Town"
+        },
+        "away-team": {
+          "id": 1169,
+          "name": "Larkhall Athletic"
+        },
+        "venue": ""
+      },
+      {
+        "id": 584235,
+        "date": "2026-12-26",
+        "time": "15:00",
+        "status": {
+          "full": "Fixture"
+        },
+        "competition": {
+          "id": "southern-league-south",
+          "name": "Southern League - South Division"
+        },
+        "home-team": {
+          "id": 1169,
+          "name": "Larkhall Athletic"
+        },
+        "away-team": {
+          "id": "test-paulton-rovers",
+          "name": "Paulton Rovers"
+        },
+        "venue": "Plain Ham"
+      },
+      {
+        "id": 584281,
+        "date": "2027-01-02",
+        "time": "15:00",
+        "status": {
+          "full": "Fixture"
+        },
+        "competition": {
+          "id": "southern-league-south",
+          "name": "Southern League - South Division"
+        },
+        "home-team": {
+          "id": "test-westbury-united",
+          "name": "Westbury United"
+        },
+        "away-team": {
+          "id": 1169,
+          "name": "Larkhall Athletic"
+        },
+        "venue": ""
+      },
+      {
+        "id": 584319,
+        "date": "2027-01-09",
+        "time": "15:00",
+        "status": {
+          "full": "Fixture"
+        },
+        "competition": {
+          "id": "southern-league-south",
+          "name": "Southern League - South Division"
+        },
+        "home-team": {
+          "id": "test-bishops-cleeve",
+          "name": "Bishops Cleeve"
+        },
+        "away-team": {
+          "id": 1169,
+          "name": "Larkhall Athletic"
+        },
+        "venue": ""
+      },
+      {
+        "id": 584367,
+        "date": "2027-01-16",
+        "time": "15:00",
+        "status": {
+          "full": "Fixture"
+        },
+        "competition": {
+          "id": "southern-league-south",
+          "name": "Southern League - South Division"
+        },
+        "home-team": {
+          "id": 1169,
+          "name": "Larkhall Athletic"
+        },
+        "away-team": {
+          "id": "test-falmouth-town",
+          "name": "Falmouth Town"
+        },
+        "venue": "Plain Ham"
+      },
+      {
+        "id": 584414,
+        "date": "2027-01-23",
+        "time": "15:00",
+        "status": {
+          "full": "Fixture"
+        },
+        "competition": {
+          "id": "southern-league-south",
+          "name": "Southern League - South Division"
+        },
+        "home-team": {
+          "id": "test-swindon-supermarine",
+          "name": "Swindon Supermarine"
+        },
+        "away-team": {
+          "id": 1169,
+          "name": "Larkhall Athletic"
+        },
+        "venue": ""
+      },
+      {
+        "id": 584455,
+        "date": "2027-01-30",
+        "time": "15:00",
+        "status": {
+          "full": "Fixture"
+        },
+        "competition": {
+          "id": "southern-league-south",
+          "name": "Southern League - South Division"
+        },
+        "home-team": {
+          "id": 1169,
+          "name": "Larkhall Athletic"
+        },
+        "away-team": {
+          "id": "test-melksham-town",
+          "name": "Melksham Town"
+        },
+        "venue": "Plain Ham"
+      },
+      {
+        "id": 584503,
+        "date": "2027-02-06",
+        "time": "15:00",
+        "status": {
+          "full": "Fixture"
+        },
+        "competition": {
+          "id": "southern-league-south",
+          "name": "Southern League - South Division"
+        },
+        "home-team": {
+          "id": "test-tiverton-town",
+          "name": "Tiverton Town"
+        },
+        "away-team": {
+          "id": 1169,
+          "name": "Larkhall Athletic"
+        },
+        "venue": ""
+      },
+      {
+        "id": 584543,
+        "date": "2027-02-13",
+        "time": "15:00",
+        "status": {
+          "full": "Fixture"
+        },
+        "competition": {
+          "id": "southern-league-south",
+          "name": "Southern League - South Division"
+        },
+        "home-team": {
+          "id": 1169,
+          "name": "Larkhall Athletic"
+        },
+        "away-team": {
+          "id": "test-sporting-club-inkberrow",
+          "name": "Sporting Club Inkberrow"
+        },
+        "venue": "Plain Ham"
+      },
+      {
+        "id": 584584,
+        "date": "2027-02-20",
+        "time": "15:00",
+        "status": {
+          "full": "Fixture"
+        },
+        "competition": {
+          "id": "southern-league-south",
+          "name": "Southern League - South Division"
+        },
+        "home-team": {
+          "id": "test-bristol-manor-farm",
+          "name": "Bristol Manor Farm"
+        },
+        "away-team": {
+          "id": 1169,
+          "name": "Larkhall Athletic"
+        },
+        "venue": ""
+      },
+      {
+        "id": 584629,
+        "date": "2027-02-27",
+        "time": "15:00",
+        "status": {
+          "full": "Fixture"
+        },
+        "competition": {
+          "id": "southern-league-south",
+          "name": "Southern League - South Division"
+        },
+        "home-team": {
+          "id": 1169,
+          "name": "Larkhall Athletic"
+        },
+        "away-team": {
+          "id": "test-bideford",
+          "name": "Bideford"
+        },
+        "venue": "Plain Ham"
+      },
+      {
+        "id": 584678,
+        "date": "2027-03-06",
+        "time": "15:00",
+        "status": {
+          "full": "Fixture"
+        },
+        "competition": {
+          "id": "southern-league-south",
+          "name": "Southern League - South Division"
+        },
+        "home-team": {
+          "id": "test-weymouth",
+          "name": "Weymouth"
+        },
+        "away-team": {
+          "id": 1169,
+          "name": "Larkhall Athletic"
+        },
+        "venue": ""
+      },
+      {
+        "id": 584719,
+        "date": "2027-03-13",
+        "time": "15:00",
+        "status": {
+          "full": "Fixture"
+        },
+        "competition": {
+          "id": "southern-league-south",
+          "name": "Southern League - South Division"
+        },
+        "home-team": {
+          "id": 1169,
+          "name": "Larkhall Athletic"
+        },
+        "away-team": {
+          "id": "test-willand-rovers",
+          "name": "Willand Rovers"
+        },
+        "venue": "Plain Ham"
+      },
+      {
+        "id": 584758,
+        "date": "2027-03-20",
+        "time": "15:00",
+        "status": {
+          "full": "Fixture"
+        },
+        "competition": {
+          "id": "southern-league-south",
+          "name": "Southern League - South Division"
+        },
+        "home-team": {
+          "id": "test-barnstaple-town",
+          "name": "Barnstaple Town"
+        },
+        "away-team": {
+          "id": 1169,
+          "name": "Larkhall Athletic"
+        },
+        "venue": ""
+      },
+      {
+        "id": 584807,
+        "date": "2027-03-26",
+        "time": "15:00",
+        "status": {
+          "full": "Fixture"
+        },
+        "competition": {
+          "id": "southern-league-south",
+          "name": "Southern League - South Division"
+        },
+        "home-team": {
+          "id": 1169,
+          "name": "Larkhall Athletic"
+        },
+        "away-team": {
+          "id": "test-worcester-raiders",
+          "name": "Worcester Raiders"
+        },
+        "venue": "Plain Ham"
+      },
+      {
+        "id": 584850,
+        "date": "2027-03-29",
+        "time": "15:00",
+        "status": {
+          "full": "Fixture"
+        },
+        "competition": {
+          "id": "southern-league-south",
+          "name": "Southern League - South Division"
+        },
+        "home-team": {
+          "id": "test-paulton-rovers",
+          "name": "Paulton Rovers"
+        },
+        "away-team": {
+          "id": 1169,
+          "name": "Larkhall Athletic"
+        },
+        "venue": ""
+      },
+      {
+        "id": 584895,
+        "date": "2027-04-03",
+        "time": "15:00",
+        "status": {
+          "full": "Fixture"
+        },
+        "competition": {
+          "id": "southern-league-south",
+          "name": "Southern League - South Division"
+        },
+        "home-team": {
+          "id": 1169,
+          "name": "Larkhall Athletic"
+        },
+        "away-team": {
+          "id": "test-exmouth-town",
+          "name": "Exmouth Town"
+        },
+        "venue": "Plain Ham"
+      },
+      {
+        "id": 584937,
+        "date": "2027-04-10",
+        "time": "15:00",
+        "status": {
+          "full": "Fixture"
+        },
+        "competition": {
+          "id": "southern-league-south",
+          "name": "Southern League - South Division"
+        },
+        "home-team": {
+          "id": "test-hartpury",
+          "name": "Hartpury"
+        },
+        "away-team": {
+          "id": 1169,
+          "name": "Larkhall Athletic"
+        },
+        "venue": ""
+      },
+      {
+        "id": 584982,
+        "date": "2027-04-17",
+        "time": "15:00",
+        "status": {
+          "full": "Fixture"
+        },
+        "competition": {
+          "id": "southern-league-south",
+          "name": "Southern League - South Division"
+        },
+        "home-team": {
+          "id": 1169,
+          "name": "Larkhall Athletic"
+        },
+        "away-team": {
+          "id": "test-dorchester-town",
+          "name": "Dorchester Town"
+        },
+        "venue": "Plain Ham"
+      }
+    ]
+  }
+}
